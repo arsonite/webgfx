@@ -7,8 +7,10 @@ const _ = undefined;
 class ParticleEmitter {
   constructor(config) {
     this.coord = config.coord !== _ ? config.coord : { x: 400, y: 300 };
-    this.interval = config.interval !== _ ? config.interval : 0;
+    this.interval = config.interval !== _ ? config.interval : 1;
     this.circular = config.circular !== _ ? config.circular : _;
+
+    this.counter = 0;
   }
 
   /*
@@ -23,7 +25,10 @@ class ParticleEmitter {
     Partikelsystem erzeugt.
   */
   update = partSys => {
-    this.emit(partSys);
+    this.counter++;
+    if (this.counter % this.interval === 0) {
+      this.emit(partSys);
+    }
   };
 
   emit = partSys => {

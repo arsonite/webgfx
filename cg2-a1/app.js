@@ -19,7 +19,7 @@ window.onload = function() {
   /* Particle emitters and systems */
   let particleEmitter = new ParticleEmitter({
     coord: { x: 400, y: 300 },
-    interval: 10,
+    interval: 1,
     circular: { rad: 50 }
   });
   let particleSystem = new ParticleSystem({
