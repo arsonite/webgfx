@@ -28,6 +28,15 @@ class ParticleSystem {
   };
 
   render = context => {
+    /*context.fillStyle = '#FFF';
+    let size = 25;
+    context.fillRect(
+      this.emitter.pos.x - size / 2,
+      this.emitter.pos.y - size / 2,
+      size,
+      size
+    );*/
+
     this.particles.forEach(particle => {
       particle.render(context);
     });

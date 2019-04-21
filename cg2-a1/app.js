@@ -18,10 +18,12 @@ window.onload = function() {
 
   /* Particle emitters and systems */
   let particleEmitter = new ParticleEmitter({
-    pos: { x: 400, y: 300 },
-    interval: 10
+    coord: { x: 400, y: 300 },
+    interval: 10,
+    circular: { rad: 50 }
   });
   let particleSystem = new ParticleSystem({
+    context: context,
     max_amount: 1000,
     emitter: particleEmitter,
     type: 'img/path'
