@@ -26,14 +26,12 @@ class ParticleEmitter {
   */
   update = partSys => {
     this.counter++;
-    if (this.counter % this.interval === 0) {
-      this.emit(partSys);
-    }
+    if (this.counter % this.interval === 0) this.emit(partSys);
   };
 
   emit = partSys => {
     this.place(partSys);
-    partSys.create(1);
+    partSys.create(10);
   };
 
   /*

@@ -17,6 +17,33 @@ window.onload = function() {
   if (!context) util.fatal('could not create 2D rendering context...');
 
   /* Particle emitters and systems */
+  let circularEmitter = new ParticleEmitter({
+    coord: { x: 400, y: 300 },
+    interval: 1,
+    circular: { rad: 50 }
+  });
+  let circularSystem = new ParticleSystem({
+    context: context,
+    max_amount: 1000,
+    emitter: circularEmitter,
+    type: 'img/path'
+    // TODO: particle system properties (e.g. particle type)
+  });
+
+  /*
+  let lineEmitter = new ParticleEmitter({
+    coord: { x: 400, y: 300 },
+    interval: 1,
+    circular: { rad: 50 }
+  });
+  let lineSystem = new ParticleSystem({
+    context: context,
+    max_amount: 1000,
+    emitter: particleEmitter,
+    type: 'img/path'
+    // TODO: particle system properties (e.g. particle type)
+  });
+
   let particleEmitter = new ParticleEmitter({
     coord: { x: 400, y: 300 },
     interval: 1,
@@ -29,10 +56,13 @@ window.onload = function() {
     type: 'img/path'
     // TODO: particle system properties (e.g. particle type)
   });
+  */
 
   // create and populate our scene
   let scene = new Scene();
-  scene.add([particleSystem]);
+  scene.add([circularSystem]);
+  //scene.add([particleSystem]);
+  //scene.add([particleSystem]);
 
   // stick the engine together
   let controller = new Controller(context, scene);

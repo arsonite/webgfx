@@ -6,20 +6,22 @@ import util from './util.js';
  */
 class ParticleSystem {
   constructor(config) {
-    this.MAX_AMOUNT = config.amount;
+    this.MAX_AMOUNT = config.max_amount;
     this.emitter = config.emitter;
     this.type = config.type;
 
     this.particles = [];
   }
 
-  create = (n = 100) => {
+  create = (n = 1) => {
+    console.log(this.particles.length);
+    if (this.particles.length + n > this.MAX_AMOUNT) return;
     for (let i = 0; i < n; i++) {
       this.particles.push(
         new Particle(
           this.emitter.pos,
           this.emitter.vel,
-          util.rand(100, 1000),
+          util.rand(10, 100),
           util.rand(1, 10),
           util.randRGBHex()
         )
@@ -28,14 +30,16 @@ class ParticleSystem {
   };
 
   render = context => {
-    /*context.fillStyle = '#FFF';
+    /*
+    context.fillStyle = '#FFF';
     let size = 25;
     context.fillRect(
       this.emitter.pos.x - size / 2,
       this.emitter.pos.y - size / 2,
       size,
       size
-    );*/
+    );
+    */
 
     this.particles.forEach(particle => {
       particle.render(context);
