@@ -6,7 +6,7 @@ import ParticleEmitter from './particleemitter.js';
 import util from './util.js';
 
 // called when the index.html is loaded by the browser
-window.onload = function() {
+window.onload = () => {
   console.log('200: Page loaded');
 
   // get our canvas
@@ -16,13 +16,13 @@ window.onload = function() {
   let context = canvas.getContext('2d');
   if (!context) util.fatal('could not create 2D rendering context...');
 
-  /* Particle emitters and systems */
+  /* ParticleEmitters and their respective configurations */
   let circularEmitter = new ParticleEmitter({
     coord: { x: 400, y: 300 },
     interval: 1,
     circular: { rad: 50 }
   });
-  let circularSystem = new ParticleSystem({
+  let circular = new ParticleSystem({
     context: context,
     max_amount: 1000,
     emitter: circularEmitter,
@@ -31,38 +31,34 @@ window.onload = function() {
   });
 
   /*
-  let lineEmitter = new ParticleEmitter({
-    coord: { x: 400, y: 300 },
-    interval: 1,
-    circular: { rad: 50 }
-  });
-  let lineSystem = new ParticleSystem({
-    context: context,
-    max_amount: 1000,
-    emitter: particleEmitter,
-    type: 'img/path'
-    // TODO: particle system properties (e.g. particle type)
-  });
-
-  let particleEmitter = new ParticleEmitter({
-    coord: { x: 400, y: 300 },
-    interval: 1,
-    circular: { rad: 50 }
-  });
-  let particleSystem = new ParticleSystem({
-    context: context,
-    max_amount: 1000,
-    emitter: particleEmitter,
-    type: 'img/path'
-    // TODO: particle system properties (e.g. particle type)
-  });
-  */
+    let lineEmitter = new ParticleEmitter({
+      coord: { x: 400, y: 300 },
+      interval: 1,
+      circular: { rad: 50 }
+    });
+    let lineSystem = new ParticleSystem({
+      context: context,
+      max_amount: 1000,
+      emitter: particleEmitter,
+      type: 'img/path'
+    });
+  
+    let particleEmitter = new ParticleEmitter({
+      coord: { x: 400, y: 300 },
+      interval: 1,
+      circular: { rad: 50 }
+    });
+    let particleSystem = new ParticleSystem({
+      context: context,
+      max_amount: 1000,
+      emitter: particleEmitter,
+      type: 'img/path'
+    });
+    */
 
   // create and populate our scene
   let scene = new Scene();
-  scene.add([circularSystem]);
-  //scene.add([particleSystem]);
-  //scene.add([particleSystem]);
+  scene.add([circular]);
 
   // stick the engine together
   let controller = new Controller(context, scene);

@@ -50,10 +50,11 @@ class ParticleEmitter {
       this.vel = { vx: 0, vy: 0 };
       return;
     }
+
+    /* Standard-Emitter */
     this.pos = this.coord;
     this.vel = { vx: util.rand(-1, 1), vy: util.rand(-1, 1) };
     this.acc = -1;
-    // TODO: place a particle with the emitter settings
   };
 }
 
