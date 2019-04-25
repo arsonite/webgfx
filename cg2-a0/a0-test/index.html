@@ -1,60 +1,64 @@
 <html>
-    <head>
-        <title>CG2 Test/Warmup</title>
+  <head>
+    <title>CG2 Test/Warmup</title>
 
-        <script type="module" src="main.js"></script>
+    <script type="module" src="main.js"></script>
 
-        <!-- import style sheet -->
-        <link rel="stylesheet" type="text/css" media="screen" href="style.css">
+    <!-- import style sheet -->
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
 
-        <!-- vertex shader for WebGL test -->
-        <script id="shader-vs" type="x-shader/x-vertex">
-            uniform mat4 uModelViewMatrix;
-            uniform mat4 uProjectionMatrix;
+    <!-- vertex shader for WebGL test -->
+    <script id="shader-vs" type="x-shader/x-vertex">
+      uniform mat4 uModelViewMatrix;
+      uniform mat4 uProjectionMatrix;
 
-            attribute vec3 aVertexPosition;
-            attribute vec2 aTextureCoord;
+      attribute vec3 aVertexPosition;
+      attribute vec2 aTextureCoord;
 
-            varying vec2 vTextureCoord;
+      varying vec2 vTextureCoord;
 
-            void main() {
-                gl_Position   = uProjectionMatrix * uModelViewMatrix * vec4(aVertexPosition, 1.0);
-                vTextureCoord = aTextureCoord;
-            }
-        </script>
+      void main() {
+          gl_Position   = uProjectionMatrix * uModelViewMatrix * vec4(aVertexPosition, 1.0);
+          vTextureCoord = aTextureCoord;
+      }
+    </script>
 
-        <!-- fragment shader for WebGL test -->
-        <script id="shader-fs" type="x-shader/x-fragment">
-            precision mediump float;
+    <!-- fragment shader for WebGL test -->
+    <script id="shader-fs" type="x-shader/x-fragment">
+      precision mediump float;
 
-            uniform sampler2D uSampler;
-            
-            varying vec2 vTextureCoord;
+      uniform sampler2D uSampler;
 
-            void main() {
-                gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-            }
-        </script>
+      varying vec2 vTextureCoord;
 
-    </head>
+      void main() {
+          gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+      }
+    </script>
+  </head>
 
-    <body>
-        <!-- 2D Canvas -->  
-        <canvas id="canvas2d" width="400" height="400" style="position:relative;">
-            <!-- NOTE: the "position:relative" is required due to the current  
+  <body>
+    <!-- 2D Canvas -->
+    <canvas id="canvas2d" width="400" height="400" style="position:relative;">
+      <!-- NOTE: the "position:relative" is required due to the current  
                  implementation of mouse coordinate processing. -->
-            If you see this text, your browser probably does not 
-            support the HTML5 canvas 2D drawing context. 
-        </canvas>
+      If you see this text, your browser probably does not support the HTML5
+      canvas 2D drawing context.
+    </canvas>
 
-        <!-- 3D WebGL Canvas -->
-        <canvas id="canvas3d" style="border: none;" width="400" height="400"></canvas>
-        <div style="float:none;"></div>
-        
-        <p>
-      
-        <div id="param_area" >
-            <input id="showDraggers" type="checkbox" checked>Show dragger<br>
-        </div>        
-    </body>
+    <!-- 3D WebGL Canvas -->
+    <canvas
+      id="canvas3d"
+      style="border: none;"
+      width="400"
+      height="400"
+    ></canvas>
+    <div style="float:none;"></div>
+
+    <p></p>
+
+    <div id="param_area">
+      <input id="showDraggers" type="checkbox" checked />Show dragger<br />
+    </div>
+  </body>
 </html>
