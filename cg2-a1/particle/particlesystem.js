@@ -1,5 +1,5 @@
 import Particle from './particle.js';
-import util from './util.js';
+import util from '../util.js';
 
 /*
  * A particle system does the book keeping of particles.

@@ -1,4 +1,4 @@
-import util from './util.js';
+import util from '../util.js';
 
 /* Ordered collection of actors.
  * Actors must provide a render/update interface.

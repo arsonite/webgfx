@@ -69,7 +69,7 @@ window.onload = () => {
   var fps = 0;
   let delta;
 
-  let mainloop = function() {
+  let mainloop = function () {
     // integrate the scene
     if (!controller.paused) {
       scene.update();

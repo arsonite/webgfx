@@ -1,4 +1,4 @@
-import util from './util.js';
+import util from '../util.js';
 
 const _ = undefined;
 
@@ -13,17 +13,6 @@ class ParticleEmitter {
     this.counter = 0;
   }
 
-  /*
-    Ein ParticleSystem erhält einen ParticleEmitter und Informationen über die Particle,
-    die es enthält. Der ParticleEmitter kümmert sich ausschließlich um das Platzieren
-    neuer Particle, während das ParticleSystem sich um den Lebenszyklus der Particle
-    kümmert. Das Erscheinungbild steuern die Particle selbst.
-  */
-
-  /*
-    update() sollte entscheiden, wann der Emitter Partikel in seinem zugewiesenem
-    Partikelsystem erzeugt.
-  */
   update = partSys => {
     this.counter++;
     if (this.counter % this.interval === 0) this.emit(partSys);
@@ -34,11 +23,6 @@ class ParticleEmitter {
     partSys.create(10);
   };
 
-  /*
-    Die place() Methode ist das Herzstück eines Emitters. Hier sollte ausgerechnet
-    werden, wo sich ein neu erzeugtes Partikel befinden wird (und welche
-    Startgeschwindigkeit es hat).
-  */
   place = partSys => {
     if (this.circular !== _) {
       let randAngle = Math.random() * Math.PI * 2; // Calculates a random circular angle
