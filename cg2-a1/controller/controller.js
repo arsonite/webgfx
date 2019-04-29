@@ -1,4 +1,10 @@
-/* Encapsulates interaction responses and head up display things like menus.
+/**
+ * Initially created by Martin Puse (C) at Beuth University
+ * Extended and built upon by Burak Günaydin (853872)
+ */
+
+/**
+ * Encapsulates interaction responses and head up display things like menus.
  */
 class Controller {
   constructor(context, scene) {

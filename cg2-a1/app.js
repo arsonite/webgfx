@@ -1,8 +1,11 @@
-import Renderer from './renderer.js';
-import Controller from './controller.js';
-import Scene from './scene.js';
-import ParticleSystem from './particlesystem.js';
-import ParticleEmitter from './particleemitter.js';
+import Renderer from './render/renderer.js';
+import Scene from './render/scene.js';
+
+import Controller from './controller/controller.js';
+
+import ParticleSystem from './particle/particlesystem.js';
+import ParticleEmitter from './particle/particleemitter.js';
+
 import util from './util.js';
 
 // called when the index.html is loaded by the browser
@@ -17,44 +20,17 @@ window.onload = () => {
   if (!context) util.fatal('could not create 2D rendering context...');
 
   /* ParticleEmitters and their respective configurations */
-  let circularEmitter = new ParticleEmitter({
-    coord: { x: 400, y: 300 },
-    interval: 1,
-    circular: { rad: 50 }
-  });
   let circular = new ParticleSystem({
+    emitter: new ParticleEmitter({
+      position: { x: 400, y: 300 },
+      velocity: { vx: 0, vy: 0 },
+      circular: { rad: 50 },
+      interval: 1,
+    }),
     context: context,
     max_amount: 1000,
-    emitter: circularEmitter,
     type: 'img/path'
-    // TODO: particle system properties (e.g. particle type)
   });
-
-  /*
-    let lineEmitter = new ParticleEmitter({
-      coord: { x: 400, y: 300 },
-      interval: 1,
-      circular: { rad: 50 }
-    });
-    let lineSystem = new ParticleSystem({
-      context: context,
-      max_amount: 1000,
-      emitter: particleEmitter,
-      type: 'img/path'
-    });
-  
-    let particleEmitter = new ParticleEmitter({
-      coord: { x: 400, y: 300 },
-      interval: 1,
-      circular: { rad: 50 }
-    });
-    let particleSystem = new ParticleSystem({
-      context: context,
-      max_amount: 1000,
-      emitter: particleEmitter,
-      type: 'img/path'
-    });
-    */
 
   // create and populate our scene
   let scene = new Scene();

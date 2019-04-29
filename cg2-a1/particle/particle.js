@@ -1,25 +1,33 @@
+/**
+ * Initially created by Martin Puse (C) at Beuth University
+ * Extended and built upon by Burak Günaydin (853872)
+ */
+
+/**
+ * 
+ */
 class Particle {
-  constructor({ x, y }, { vx, vy }, lf = 100, size = 1, col = '#FFF') {
-    this.pos = { x, y };
+  constructor({ x, y }, { vx, vy }, lifetime = 100, size = 1, color = '#FFF') {
+    this.position = { x, y };
     /* Sets horizontal and vertical velocity properties (can also be negative) */
-    this.vel = { vx, vy };
+    this.velocity = { vx, vy };
 
     /* Initialize maximum and current lifetime */
-    this.MAX_LF = this.lf = lf;
+    this.MAX_LIFETIME = this.lifetime = lifetime;
     this.size = size;
-    this.col = col;
+    this.color = color;
   }
 
   update = (acc = 0) => {
-    this.pos.x += this.vel.vx;
-    this.pos.y += this.vel.vy;
+    this.position.x += this.velocity.vx;
+    this.position.y += this.velocity.vy;
 
-    this.lf--;
+    this.lifetime--;
   };
 
   render = context => {
-    context.fillStyle = this.col;
-    context.fillRect(this.pos.x, this.pos.y, this.size, this.size);
+    context.fillStyle = this.color;
+    context.fillRect(this.position.x, this.position.y, this.size, this.size);
   };
 }
 
