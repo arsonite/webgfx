@@ -3,6 +3,8 @@ import Scene from './render/scene.js';
 
 import Controller from './controller/controller.js';
 
+import Dragger from './render/dragger';
+
 import ParticleSystem from './particle/particleSystem.js';
 import ParticleEmitter from './particle/particleEmitter.js';
 import CircularEmitter from './particle/circularEmitter.js';
@@ -16,25 +18,28 @@ window.onload = () => {
   // get our canvas
   let canvas = util.byid('canvas2d');
   if (!canvas) util.fatal('canvas not found...');
-  canvas.height = canvas.offsetHeight;
-  canvas.width = canvas.offsetWidth;
-
+  const f = 1.0;
+  canvas.height = canvas.offsetHeight * f;
+  canvas.width = canvas.offsetWidth * f;
   window.onresize = () => {
-    canvas.height = canvas.offsetHeight;
-    canvas.width = canvas.offsetWidth;
-  }
+    canvas.height = canvas.offsetHeight * f;
+    canvas.width = canvas.offsetWidth * f;
+  };
 
   // get the 2D rendering context from canvas element
   let context = canvas.getContext('2d');
   if (!context) util.fatal('could not create 2D rendering context...');
 
   /* ParticleEmitters and their respective configurations */
+  let draggers = [];
   let emitters = [];
+
+  let dragger = new Dragger();
 
   let standard = new ParticleSystem({
     emitter: new ParticleEmitter({
       coordinates: { x: 150, y: 150 },
-      velocity: { x: 1, y: 1 },
+      velocity: { vx: 1, vy: 1 },
       interval: 1,
       n: 10
     }),
@@ -46,7 +51,7 @@ window.onload = () => {
 
   let circular = new ParticleSystem({
     emitter: new CircularEmitter({
-      coordinates: { x: 600, y: 400 },
+      coordinates: { x: 100, y: 500 },
       random: false,
       radius: 75,
       period: 150,
@@ -56,12 +61,12 @@ window.onload = () => {
     context: context,
     max_amount: 1000
   });
-  emitters.push(circular);
+  //emitters.push(circular);
 
   let spiral = new ParticleSystem({
     emitter: new CircularEmitter({
       coordinates: { x: 400, y: 300 },
-      velocity: { x: 1, y: 1 },
+      velocity: { vx: 1, vy: 1 },
       random: false,
       radius: 100,
       period: 100,
@@ -77,7 +82,7 @@ window.onload = () => {
   let scene = new Scene();
   emitters.forEach(emitter => {
     scene.add([emitter]);
-  })
+  });
 
   // stick the engine together
   let controller = new Controller(context, scene);
@@ -86,9 +91,8 @@ window.onload = () => {
   // for fps measuring
   var before = 0;
   var fps = 0;
-  let delta;
 
-  let mainloop = function () {
+  let mainloop = function() {
     // integrate the scene
     if (!controller.paused) {
       scene.update();

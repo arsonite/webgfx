@@ -11,7 +11,8 @@ const _ = undefined;
  */
 class ParticleEmitter {
   constructor(config) {
-    this.coordinates = config.coordinates !== _ ? config.coordinates : { x: 400, y: 300 };
+    this.coordinates =
+      config.coordinates !== _ ? config.coordinates : { x: 400, y: 300 };
     this.velocity = config.velocity !== _ ? config.velocity : { x: 1, y: 1 };
 
     this.n = config.n !== _ ? config.n : _;
@@ -21,7 +22,7 @@ class ParticleEmitter {
   }
 
   /**
-   * 
+   *
    */
   update = partSys => {
     this.counter++;
@@ -29,7 +30,7 @@ class ParticleEmitter {
   };
 
   /**
-   * 
+   *
    */
   emit = partSys => {
     this.place(partSys);
@@ -37,11 +38,12 @@ class ParticleEmitter {
   };
 
   /**
-   * 
+   *
    */
-  place = partSys => {
+  place = () => {
+    this.velocity = { vx: util.rand(-1, 1), vy: util.rand(-1, 1) };
     this.position = this.coordinates;
-  }
-};
+  };
+}
 
 export default ParticleEmitter;

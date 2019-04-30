@@ -4,13 +4,13 @@
  */
 
 /**
- * 
+ *
  */
 class Particle {
-  constructor(position, velocity, lifetime = 100, size = 1, color = '#FFF') {
-    this.position = position;
+  constructor({ x, y }, { vx, vy }, lifetime = 100, size = 1, color = '#FFF') {
+    this.position = { x, y };
     /* Sets horizontal and vertical velocity properties (can also be negative) */
-    this.velocity = velocity;
+    this.velocity = { vx, vy };
 
     /* Initialize maximum and current lifetime */
     this.MAX_LIFETIME = this.lifetime = lifetime;
@@ -19,8 +19,8 @@ class Particle {
   }
 
   update = (acc = 0) => {
-    this.position.x += this.velocity.x;
-    this.position.y += this.velocity.y;
+    this.position.x += this.velocity.vx;
+    this.position.y += this.velocity.vy;
 
     this.lifetime--;
   };
