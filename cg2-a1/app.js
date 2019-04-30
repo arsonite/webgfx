@@ -16,6 +16,14 @@ window.onload = () => {
   // get our canvas
   let canvas = util.byid('canvas2d');
   if (!canvas) util.fatal('canvas not found...');
+  canvas.height = canvas.offsetHeight;
+  canvas.width = canvas.offsetWidth;
+
+  window.onresize = () => {
+    canvas.height = canvas.offsetHeight;
+    canvas.width = canvas.offsetWidth;
+  }
+
   // get the 2D rendering context from canvas element
   let context = canvas.getContext('2d');
   if (!context) util.fatal('could not create 2D rendering context...');
@@ -34,7 +42,7 @@ window.onload = () => {
     max_amount: 1000,
     type: 'img/path'
   });
-  emitters.push(standard);
+  //emitters.push(standard);
 
   let circular = new ParticleSystem({
     emitter: new CircularEmitter({
@@ -46,8 +54,7 @@ window.onload = () => {
       n: 10
     }),
     context: context,
-    max_amount: 1000,
-    type: 'img/path'
+    max_amount: 1000
   });
   emitters.push(circular);
 
@@ -62,8 +69,7 @@ window.onload = () => {
       n: 10
     }),
     context: context,
-    max_amount: 1000,
-    type: 'img/path'
+    max_amount: 1000
   });
   //emitters.push(spiral);
 
@@ -75,7 +81,7 @@ window.onload = () => {
 
   // stick the engine together
   let controller = new Controller(context, scene);
-  let renderer = new Renderer(context, 'rgb(0, 0, 0)');
+  let renderer = new Renderer(context, 'rgb(10, 20, 30)');
 
   // for fps measuring
   var before = 0;
