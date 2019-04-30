@@ -31,11 +31,7 @@ window.onload = () => {
   if (!context) util.fatal('could not create 2D rendering context...');
 
   /* ParticleEmitters and their respective configurations */
-  let draggers = [];
   let emitters = [];
-
-  let dragger = new Dragger({ x: 500, y: 500 }, 100);
-  draggers.push(dragger);
 
   let standard = new ParticleSystem({
     emitter: new ParticleEmitter({
@@ -53,7 +49,6 @@ window.onload = () => {
   let circular = new ParticleSystem({
     emitter: new CircularEmitter({
       coordinates: { x: 100, y: 500 },
-      random: false,
       radius: 75,
       period: 150,
       interval: 1,
@@ -62,7 +57,7 @@ window.onload = () => {
     context: context,
     max_amount: 1000
   });
-  //emitters.push(circular);
+  emitters.push(circular);
 
   let spiral = new ParticleSystem({
     emitter: new CircularEmitter({
@@ -81,9 +76,6 @@ window.onload = () => {
 
   // create and populate our scene
   let scene = new Scene();
-  draggers.forEach(dragger => {
-    scene.add([dragger]);
-  });
   emitters.forEach(emitter => {
     scene.add([emitter]);
   });

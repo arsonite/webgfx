@@ -3,6 +3,7 @@
  * Extended and built upon by Burak Günaydin (853872)
  */
 import Particle from './particle.js';
+import Dragger from '../dragger.js';
 
 import util from '../util.js';
 
@@ -18,6 +19,7 @@ class ParticleSystem {
     this.acceleration = -1;
 
     this.particles = [];
+    this.dragger = this.getDraggers();
   }
 
   create = (n = 1) => {
@@ -26,8 +28,8 @@ class ParticleSystem {
       this.particles.push(
         new Particle(
           this.emitter.position,
-          //this.emitter.velocity,
-          { vx: util.rand(-1, 1), vy: util.rand(-1, 1) },
+          this.emitter.velocity,
+          //{ vx: util.rand(-1, 1), vy: util.rand(-1, 1) },
           util.rand(10, 100),
           util.rand(1, 10),
           util.randRGBHex()
@@ -37,17 +39,8 @@ class ParticleSystem {
   };
 
   render = context => {
-    /*
-    context.fillStyle = '#FFF';
-    let size = 25;
-    context.fillRect(
-      this.emitter.pos.x - size / 2,
-      this.emitter.pos.y - size / 2,
-      size,
-      size
-    );
-    */
-
+    this.dragger.render(context);
+    this.emitter.coordinates = this.dragger.position;
     this.particles.forEach(particle => {
       particle.render(context);
     });
@@ -61,12 +54,10 @@ class ParticleSystem {
     this.particles.forEach((particle, i) => {
       particle.lifetime > 0 ? particle.update() : this.particles.splice(i, 1);
     });
-
-    // TODO: more logic over the particles if necessary
   };
 
   getDraggers() {
-
+    return new Dragger(this.emitter.coordinates);
   }
 }
 

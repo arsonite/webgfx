@@ -12,8 +12,6 @@ class CircularEmitter extends ParticleEmitter {
 
     this.velocity = config.velocity !== _ ? config.velocity : { vx: 0, vy: 0 };
 
-    this.random = config.random !== _ ? config.random : true;
-    //this.spiral =
     this.radius = config.radius !== _ ? config.radius : 50;
     this.period = this.random ? _ : config.period !== _ ? config.period : 100;
   }
