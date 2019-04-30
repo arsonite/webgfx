@@ -3,7 +3,7 @@ import Scene from './render/scene.js';
 
 import Controller from './controller/controller.js';
 
-import Dragger from './render/dragger';
+import Dragger from './dragger.js';
 
 import ParticleSystem from './particle/particleSystem.js';
 import ParticleEmitter from './particle/particleEmitter.js';
@@ -34,7 +34,8 @@ window.onload = () => {
   let draggers = [];
   let emitters = [];
 
-  let dragger = new Dragger();
+  let dragger = new Dragger({ x: 500, y: 500 }, 100);
+  draggers.push(dragger);
 
   let standard = new ParticleSystem({
     emitter: new ParticleEmitter({
@@ -47,7 +48,7 @@ window.onload = () => {
     max_amount: 1000,
     type: 'img/path'
   });
-  //emitters.push(standard);
+  emitters.push(standard);
 
   let circular = new ParticleSystem({
     emitter: new CircularEmitter({
@@ -80,6 +81,9 @@ window.onload = () => {
 
   // create and populate our scene
   let scene = new Scene();
+  draggers.forEach(dragger => {
+    scene.add([dragger]);
+  });
   emitters.forEach(emitter => {
     scene.add([emitter]);
   });
@@ -92,7 +96,7 @@ window.onload = () => {
   var before = 0;
   var fps = 0;
 
-  let mainloop = function() {
+  let mainloop = function () {
     // integrate the scene
     if (!controller.paused) {
       scene.update();
@@ -103,7 +107,7 @@ window.onload = () => {
 
     // hud fps
     context.font = '12pt Arial';
-    context.fillStyle = 'white';
+    context.fillStyle = '#FFF';
     context.fillText(`fps: ${fps}`, 10, 25);
 
     // let the browser do the fps thing

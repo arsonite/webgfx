@@ -4,6 +4,8 @@
  */
 import util from '../util.js';
 
+import Dragger from '../dragger.js';
+
 /**
  * Ordered collection of actors.
  * Actors must provide a render/update interface.
@@ -50,8 +52,20 @@ class Scene {
     }
   };
 
+  move = pos => {
+    this.actors.forEach(actor => {
+      if (actor instanceof Dragger) {
+        actor.drag(pos);
+      }
+    });
+  }
+
   pick = pos => {
-    // TODO: implement picking of actors
+    this.actors.forEach(actor => {
+      if (actor instanceof Dragger) {
+        actor.isHit(pos);
+      }
+    });
   };
 }
 

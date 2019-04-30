@@ -9,9 +9,6 @@ body {
   overflow: hidden;
   background-color: #353535;
 }
-body main {
-  padding: 15px;
-}
 body main #scene canvas {
   position: relative;
   height: 100%;

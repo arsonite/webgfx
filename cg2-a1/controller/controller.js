@@ -23,27 +23,28 @@ class Controller {
     let canvas = this.context.canvas;
 
     // register mouse actions over the canvas
-    canvas.addEventListener(
-      'mousemove',
-      event => {
-        let mouse = this.mouse;
+    canvas.onmousemove = event => {
+      let mouse = this.mouse;
+      let newpos = this.contextPos(event);
+      mouse.dxy[0] = newpos[0] - mouse.pos[0];
+      mouse.dxy[1] = newpos[1] - mouse.pos[1];
+      mouse.pos = newpos;
 
-        let newpos = this.contextPos(event);
-        mouse.dxy[0] = newpos[0] - mouse.pos[0];
-        mouse.dxy[1] = newpos[1] - mouse.pos[1];
-        mouse.pos = newpos;
-      },
-      false
-    );
+      this.scene.move(this.contextPos(event));
+    };
 
-    canvas.addEventListener('click', event => {
+    canvas.onmousedown = event => {
       // activate that keypresses are associated with the canvas
       canvas.setAttribute('tabindex', '0');
       canvas.focus();
 
       // perform picking on the scene
       this.scene.pick(this.contextPos(event));
-    });
+    };
+
+    canvas.onmouseup = event => {
+      this.scene.pick([-1, -1]);
+    };
 
     canvas.addEventListener(
       'keypress',
