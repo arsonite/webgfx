@@ -16,6 +16,8 @@ class ParticleSystem {
     this.type = config.type;
 
     this.particles = [];
+
+    this.acceleration = -1;
   }
 
   create = (n = 1) => {

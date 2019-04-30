@@ -1,47 +1,46 @@
 /*
  * Loose collection of helper functions.
  */
-let util = {};
+const util = {
+  byid: id => {
+    return document.getElementById(id);
+  },
 
-// handy shortcut
-util.byid = id => {
-  return document.getElementById(id);
-};
+  /* Convenient error-throw */
+  fatal: msg => {
+    throw new Error(msg);
+  },
 
-// encapsulates throw for convenience
-util.fatal = msg => {
-  throw new Error(msg);
-};
+  /* ES5-compatible array-check */
+  isArray: arr => {
+    return Object.prototype.toString.call(arr) === '[object Array]';
+  },
 
-// check being an array
-util.isArray = arr => {
-  return Object.prototype.toString.call(arr) === '[object Array]';
-};
+  /* Returns a number between min and max */
+  rand: (min, max) => {
+    return min + (max - min) * Math.random();
+  },
 
-// returns a number between min and max
-util.rand = (min, max) => {
-  return min + (max - min) * Math.random();
-};
+  /* Returns an integer between min and max */
+  irand: (min, max) => {
+    return Math.round(min + (max - min) * Math.random());
+  },
 
-// returns an integer between min and max
-util.irand = (min, max) => {
-  return Math.round(min + (max - min) * Math.random());
-};
+  /* Helper: convert a byte (0...255) to a 2-digit hex string */
+  _byte2hex: byte => {
+    let string = byte.toString(16); // convert to hex string
+    return string.length === 1 // eventually pad with leading 0
+      ? '0' + string
+      : string;
+  },
 
-// helper: convert a byte (0...255) to a 2-digit hex string
-let _byte2hex = byte => {
-  let string = byte.toString(16); // convert to hex string
-  return string.length === 1 // eventually pad with leading 0
-    ? '0' + string
-    : string;
-};
-
-// generates a random color in hex notation #rrggbb
-util.randRGBHex = () => {
-  return `#
-    ${_byte2hex(Math.floor(Math.random() * 256))}
-    ${_byte2hex(Math.floor(Math.random() * 256))}
-    ${_byte2hex(Math.floor(Math.random() * 256))}`.replace(/\s+/gm, '');
+  /* Generates a random color in hex notation #rrggbb */
+  randRGBHex: () => {
+    return `#
+      ${util._byte2hex(Math.floor(Math.random() * 256))}
+      ${util._byte2hex(Math.floor(Math.random() * 256))}
+      ${util._byte2hex(Math.floor(Math.random() * 256))}`.replace(/\s+/gm, '');
+  }
 };
 
 // generates a random color in byte notation [0-255, 0-255, 0-255]
@@ -59,7 +58,7 @@ util.randRGBNorm = () => {
 };
 
 // interpolates between a and b with t from [0, 1]
-util.lerp = (a, b, t) => {
+util.interpol = (a, b, t) => {
   return (1 - t) * a + t * b;
 };
 

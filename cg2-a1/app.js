@@ -3,8 +3,9 @@ import Scene from './render/scene.js';
 
 import Controller from './controller/controller.js';
 
-import ParticleSystem from './particle/particlesystem.js';
-import ParticleEmitter from './particle/particleemitter.js';
+import ParticleSystem from './particle/particleSystem.js';
+import ParticleEmitter from './particle/particleEmitter.js';
+import CircularEmitter from './particle/circularEmitter.js';
 
 import util from './util.js';
 
@@ -20,21 +21,57 @@ window.onload = () => {
   if (!context) util.fatal('could not create 2D rendering context...');
 
   /* ParticleEmitters and their respective configurations */
-  let circular = new ParticleSystem({
+  let emitters = [];
+
+  let standard = new ParticleSystem({
     emitter: new ParticleEmitter({
-      position: { x: 400, y: 300 },
-      velocity: { vx: 0, vy: 0 },
-      circular: { rad: 50 },
+      coordinates: { x: 150, y: 150 },
+      velocity: { x: 1, y: 1 },
       interval: 1,
+      n: 10
     }),
     context: context,
     max_amount: 1000,
     type: 'img/path'
   });
+  emitters.push(standard);
+
+  let circular = new ParticleSystem({
+    emitter: new CircularEmitter({
+      coordinates: { x: 600, y: 400 },
+      random: false,
+      radius: 75,
+      period: 150,
+      interval: 1,
+      n: 10
+    }),
+    context: context,
+    max_amount: 1000,
+    type: 'img/path'
+  });
+  emitters.push(circular);
+
+  let spiral = new ParticleSystem({
+    emitter: new CircularEmitter({
+      coordinates: { x: 400, y: 300 },
+      velocity: { x: 1, y: 1 },
+      random: false,
+      radius: 100,
+      period: 100,
+      interval: 1,
+      n: 10
+    }),
+    context: context,
+    max_amount: 1000,
+    type: 'img/path'
+  });
+  //emitters.push(spiral);
 
   // create and populate our scene
   let scene = new Scene();
-  scene.add([circular]);
+  emitters.forEach(emitter => {
+    scene.add([emitter]);
+  })
 
   // stick the engine together
   let controller = new Controller(context, scene);
