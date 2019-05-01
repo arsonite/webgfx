@@ -3,11 +3,9 @@ import Scene from './render/scene.js';
 
 import Controller from './controller/controller.js';
 
-import Dragger from './dragger.js';
-
 import ParticleSystem from './particle/particleSystem.js';
-import ParticleEmitter from './particle/particleEmitter.js';
-import CircularEmitter from './particle/circularEmitter.js';
+import ParticleEmitter from './particle/emitter/particleEmitter.js';
+import CircularEmitter from './particle/emitter/circularEmitter.js';
 
 import util from './util.js';
 

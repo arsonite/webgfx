@@ -54,13 +54,17 @@ class Scene {
 
   move = pos => {
     this.actors.forEach(actor => {
-      actor.dragger.drag(pos);
+      actor.getDraggers().forEach(dragger => {
+        dragger.drag(pos);
+      })
     });
   }
 
   pick = pos => {
     this.actors.forEach(actor => {
-      actor.dragger.isHit(pos);
+      actor.getDraggers().forEach(dragger => {
+        dragger.isHit(pos);
+      })
     });
   };
 }

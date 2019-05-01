@@ -2,7 +2,8 @@
  * Initially created by Martin Puse (C) at Beuth University
  * Extended and built upon by Burak Günaydin (853872)
  */
-import util from '../util.js';
+import util from '../../util.js';
+import Dragger from '../../dragger.js';
 
 const _ = undefined;
 
@@ -11,20 +12,23 @@ const _ = undefined;
  */
 class ParticleEmitter {
   constructor(config) {
-    this.coordinates =
-      config.coordinates !== _ ? config.coordinates : { x: 400, y: 300 };
+    this.coordinates = config.coordinates !== _ ? config.coordinates : { x: 400, y: 300 };
     this.velocity = config.velocity !== _ ? config.velocity : { x: 1, y: 1 };
 
     this.n = config.n !== _ ? config.n : _;
     this.interval = config.interval !== _ ? config.interval : 1;
 
     this.counter = 0;
+
+    this.draggers = [new Dragger(this.coordinates)];
   }
 
   /**
    *
    */
   update = partSys => {
+    this.coordinates = this.draggers[0].position;
+
     this.counter++;
     if (this.counter % this.interval === 0) this.emit(partSys);
   };

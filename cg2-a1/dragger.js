@@ -2,6 +2,7 @@
  * Initially created by Burak Günaydin (853872) at Beuth University
  */
 
+const _ = undefined;
 const colors = ['#F00', '#0F0'];
 
 class Dragger {
@@ -22,7 +23,16 @@ class Dragger {
     context.stroke();
   };
 
-  update = () => { };
+  update = () => {
+    if (this.parent !== _) {
+      if (this.oldPosition.x !== this.position.x) {
+
+      }
+      if (this.oldPosition.y !== this.position.y) {
+
+      }
+    }
+  };
 
   isHit = pos => {
     const point = Math.pow(pos[0] - this.position.x, 2) + Math.pow(pos[1] - this.position.y, 2);

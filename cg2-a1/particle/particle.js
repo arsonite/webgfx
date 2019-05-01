@@ -26,8 +26,10 @@ class Particle {
   };
 
   render = context => {
+    context.beginPath();
+    context.arc(this.position.x, this.position.y, this.size, 0, 2 * Math.PI, false);
     context.fillStyle = this.color;
-    context.fillRect(this.position.x, this.position.y, this.size, this.size);
+    context.fill();
   };
 }
 

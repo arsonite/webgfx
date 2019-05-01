@@ -19,7 +19,6 @@ class ParticleSystem {
     this.acceleration = -1;
 
     this.particles = [];
-    this.dragger = this.getDraggers();
   }
 
   create = (n = 1) => {
@@ -39,8 +38,10 @@ class ParticleSystem {
   };
 
   render = context => {
-    this.dragger.render(context);
-    this.emitter.coordinates = this.dragger.position;
+    this.getDraggers().forEach(dragger => {
+      dragger.render(context);
+    });
+
     this.particles.forEach(particle => {
       particle.render(context);
     });
@@ -57,7 +58,7 @@ class ParticleSystem {
   };
 
   getDraggers() {
-    return new Dragger(this.emitter.coordinates);
+    return this.emitter.draggers;
   }
 }
 
