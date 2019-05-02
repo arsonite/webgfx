@@ -15,7 +15,7 @@ class ParticleEmitter {
     this.coordinates = config.coordinates !== _ ? config.coordinates : { x: 400, y: 300 };
     this.velocity = config.velocity !== _ ? config.velocity : { x: 1, y: 1 };
 
-    this.n = config.n !== _ ? config.n : _;
+    this.n = config.n;
     this.interval = config.interval !== _ ? config.interval : 1;
 
     this.counter = 0;

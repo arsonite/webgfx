@@ -23,18 +23,10 @@ class Dragger {
     context.stroke();
   };
 
-  update = () => {
-    if (this.parent !== _) {
-      if (this.oldPosition.x !== this.position.x) {
-
-      }
-      if (this.oldPosition.y !== this.position.y) {
-
-      }
-    }
-  };
+  update = () => { };
 
   isHit = pos => {
+    /* Formular to determine if point is within circle of dragger: Point is within circle if (x - a)^2 + (y - b)^2 < r^2 */
     const point = Math.pow(pos[0] - this.position.x, 2) + Math.pow(pos[1] - this.position.y, 2);
     this.hit = point < Math.pow(this.radius, 2);
   };

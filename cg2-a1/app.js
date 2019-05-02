@@ -36,11 +36,11 @@ window.onload = () => {
       coordinates: { x: 150, y: 150 },
       velocity: { vx: 1, vy: 1 },
       interval: 1,
-      n: 10
+      n: 1
     }),
     context: context,
-    max_amount: 1000,
-    type: 'img/path'
+    max_amount: 100,
+    src: './res/snowflake.svg'
   });
   emitters.push(standard);
 
@@ -48,29 +48,14 @@ window.onload = () => {
     emitter: new CircularEmitter({
       coordinates: { x: 100, y: 500 },
       radius: 75,
-      period: 150,
+      period: 100,
       interval: 1,
-      n: 10
+      n: 1
     }),
     context: context,
     max_amount: 1000
   });
   emitters.push(circular);
-
-  let spiral = new ParticleSystem({
-    emitter: new CircularEmitter({
-      coordinates: { x: 400, y: 300 },
-      velocity: { vx: 1, vy: 1 },
-      random: false,
-      radius: 100,
-      period: 100,
-      interval: 1,
-      n: 10
-    }),
-    context: context,
-    max_amount: 1000
-  });
-  //emitters.push(spiral);
 
   // create and populate our scene
   let scene = new Scene();

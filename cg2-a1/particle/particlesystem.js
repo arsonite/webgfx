@@ -7,6 +7,8 @@ import Dragger from '../dragger.js';
 
 import util from '../util.js';
 
+const _ = undefined;
+
 /*
  * A particle system does the book keeping of particles.
  */
@@ -14,8 +16,8 @@ class ParticleSystem {
   constructor(config) {
     this.MAX_AMOUNT = config.max_amount;
     this.emitter = config.emitter;
-    this.type = config.type;
 
+    this.src = config.src;
     this.acceleration = -1;
 
     this.particles = [];
@@ -31,7 +33,8 @@ class ParticleSystem {
           //{ vx: util.rand(-1, 1), vy: util.rand(-1, 1) },
           util.rand(10, 100),
           util.rand(1, 10),
-          util.randRGBHex()
+          util.randRGBHex(),
+          this.src
         )
       );
     }

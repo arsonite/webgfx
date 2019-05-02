@@ -29,6 +29,7 @@ class CircularEmitter extends ParticleEmitter {
   update = partSys => {
     this.coordinates = this.draggers[0].position;
 
+    /* Circular distance formular: Square root of (x - a)^2 + (y - b)^2 */
     const distance = Math.sqrt(Math.pow((this.draggers[1].position.x - this.draggers[0].position.x), 2) + Math.pow((this.draggers[1].position.y - this.draggers[0].position.y), 2));
     this.radius = distance;
 
