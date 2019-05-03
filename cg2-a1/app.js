@@ -32,21 +32,38 @@ window.onload = () => {
   /* ParticleEmitters and their respective configurations */
   let emitters = [];
 
-  let standard = new ParticleSystem({
+  let basic = new ParticleSystem({
     emitter: new ParticleEmitter({
-      coordinates: { x: 150, y: 150 },
-      velocity: 1000,
+      coordinates: { x: 500, y: 200 },
+      lifetime: [10, 100],
+      size: [10, 25],
+      color: [256, 256, 0],
+      die: { 'colorize': [256, 0, 0] },
+      interval: 1,
+      n: 1
+    }),
+    gravitation: [0, -0.1],
+    max_amount: 100,
+    context: context
+  });
+  emitters.push(basic);
+
+  let snowflakes = new ParticleSystem({
+    emitter: new ParticleEmitter({
+      coordinates: { x: 250, y: 150 },
+      velocity: [-3, 3],
       lifetime: [10, 500],
       size: [10, 50],
       die: 'fade',
       interval: 1,
       n: 1
     }),
-    max_amount: 100,
+    gravitation: [0, 0.25],
     src: './res/snowflake.svg',
+    max_amount: 100,
     context: context
   });
-  emitters.push(standard);
+  emitters.push(snowflakes);
 
   let circular = new ParticleSystem({
     emitter: new CircularEmitter({
@@ -54,7 +71,7 @@ window.onload = () => {
       velocity: [-0.25, 0.25],
       lifetime: [1, 100],
       size: [1, 10],
-      die: { 'colorize': [250, 250, 250] },
+      die: { 'colorize': [256, 256, 256] },
       radius: 75,
       period: 100,
       interval: 1,

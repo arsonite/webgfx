@@ -10,7 +10,7 @@ const _ = undefined;
  *
  */
 class Particle {
-  constructor(position, velocity, lifetime, size, color = '#FFF', src, die) {
+  constructor(position, velocity, lifetime, size, color, src, die) {
     this.position = Object.assign({}, position);
 
     /* Sets horizontal and vertical velocity properties (can also be negative) */
@@ -21,8 +21,13 @@ class Particle {
     } else if (Array.isArray(velocity)) {
       this.velocity.x = util.rand(velocity[0], velocity[1]);
       this.velocity.y = util.rand(velocity[0], velocity[1]);
-    } else {
+    } else if (typeof velocity === 'object') {
       this.velocity = Object.assign({}, velocity);
+    } else if (velocity === _) {
+      this.velocity = { x: 0, y: 0 }
+    } else {
+      this.velocity.x = velocity;
+      this.velocity.y = velocity;
     }
 
     /* Initialize maximum and current lifetime */
@@ -45,6 +50,16 @@ class Particle {
     }
 
     /* */
+    this.color = color !== _ ? color : util.randRGBByte();
+    this.startColor = this.color;
+
+    this.src = src;
+    if (this.src !== _) {
+      this.img = new Image();
+      this.img.src = this.src;
+    }
+
+    /* */
     if (die !== _) {
       if (die === 'random') {
       } else if (die['colorize'] !== _) {
@@ -58,23 +73,15 @@ class Particle {
       }
     }
 
-    this.startColor = this.color = color;
-
-    this.src = src;
-    if (this.src !== _) {
-      this.img = new Image();
-      this.img.src = this.src;
-    }
-
     this.angle = 1;
   }
 
   /**
    * 
    */
-  update = (acceleration = 0) => {
-    this.position.x += this.velocity.x += acceleration;
-    this.position.y += this.velocity.y += acceleration;
+  update = (gravitation = 0) => {
+    this.position.x += this.velocity.x += gravitation.x;
+    this.position.y += this.velocity.y += gravitation.y;
 
     /* Simple three-set calculation to determine the t [1-0] of the particles lifetime*/
     this.lifetimePercentage = ((this.lifetime * 100) / this.MAX_LIFETIME) / 100;

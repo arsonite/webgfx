@@ -18,7 +18,21 @@ class ParticleSystem {
     this.emitter = config.emitter;
 
     this.src = config.src;
-    this.acceleration = config.acceleration;
+
+    this.gravitation = {};
+    if (config.gravitation === 'random') {
+      this.gravitation = util.rand(0.1, 1);
+    } else if (Array.isArray(config.gravitation)) {
+      this.gravitation.x = config.gravitation[0];
+      this.gravitation.y = config.gravitation[1];
+    } else if (typeof config.gravitation === 'object') {
+      this.gravitation = Object.assign({}, config.gravitation);
+    } else if (config.gravitation === _) {
+      this.gravitation = { x: 0, y: 0 }
+    } else {
+      this.gravitation.x = config.gravitation;
+      this.gravitation.y = config.gravitation;
+    }
 
     this.particles = [];
   }
@@ -35,7 +49,7 @@ class ParticleSystem {
           this.emitter.velocity,
           this.emitter.lifetime,
           this.emitter.size,
-          util.randRGBByte(),
+          this.emitter.color,
           this.src,
           this.emitter.die
         )
@@ -67,7 +81,7 @@ class ParticleSystem {
 
     /* Observes particle lifetime and removes them from array when reaching 0 */
     this.particles.forEach((particle, i) => {
-      particle.lifetime > 0 ? particle.update(this.acceleration) : this.particles.splice(i, 1);
+      particle.lifetime > 0 ? particle.update(this.gravitation) : this.particles.splice(i, 1);
     });
   };
 

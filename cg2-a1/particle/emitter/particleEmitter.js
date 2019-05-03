@@ -26,6 +26,8 @@ class ParticleEmitter {
     /* Interval of ticks of particle creation, default value is 1 */
     this.interval = config.interval !== _ ? config.interval : 1;
 
+    this.color = config.color;
+
     /* Configuration of how particles are supposed to die when reaching their lifetime-limit */
     this.die = config.die;
 
@@ -50,7 +52,7 @@ class ParticleEmitter {
    *
    */
   emit = partSys => {
-    this.place(partSys);
+    this.place();
     partSys.create(this.n);
   };
 
@@ -58,7 +60,6 @@ class ParticleEmitter {
    *
    */
   place = () => {
-    this.velocity = { x: util.rand(-1, 1), y: util.rand(-1, 1) };
     this.position = this.coordinates;
   };
 }
