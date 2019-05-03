@@ -9,6 +9,12 @@ body {
   overflow: hidden;
   background-color: #353535;
 }
+body main #scene #debug_frame {
+  position: fixed;
+  z-index: 10;
+  top: 50px;
+  left: 10px;
+}
 body main #scene canvas {
   position: relative;
   height: 100%;
