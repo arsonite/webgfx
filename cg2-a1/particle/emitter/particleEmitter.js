@@ -12,15 +12,26 @@ const _ = undefined;
  */
 class ParticleEmitter {
   constructor(config) {
-    this.coordinates = config.coordinates !== _ ? config.coordinates : { x: 400, y: 300 };
-    this.velocity = config.velocity !== _ ? config.velocity : { x: 1, y: 1 };
+    this.coordinates = config.coordinates;
 
+    /* If no velocity-value-pair is passed, assign the random token */
+    this.velocity = config.velocity !== _ ? config.velocity : 'random';
+    /* If no size-value is passed, assign the random token */
+    this.size = config.size !== _ ? config.size : 'random';
+    /* If no lifetime-value is passed, assign the random token */
+    this.lifetime = config.lifetime ? config.lifetime : 'random';
+
+    /* How many particles are created per tick */
     this.n = config.n;
+    /* Interval of ticks of particle creation, default value is 1 */
     this.interval = config.interval !== _ ? config.interval : 1;
 
-    this.counter = 0;
+    /* Configuration of how particles are supposed to die when reaching their lifetime-limit */
+    this.die = config.die;
 
     this.draggers = [new Dragger(this.coordinates)];
+
+    this.counter = 0;
   }
 
   /**
@@ -32,6 +43,8 @@ class ParticleEmitter {
     this.counter++;
     if (this.counter % this.interval === 0) this.emit(partSys);
   };
+
+  render = context => { };
 
   /**
    *
@@ -45,7 +58,7 @@ class ParticleEmitter {
    *
    */
   place = () => {
-    this.velocity = { vx: util.rand(-1, 1), vy: util.rand(-1, 1) };
+    this.velocity = { x: util.rand(-1, 1), y: util.rand(-1, 1) };
     this.position = this.coordinates;
   };
 }

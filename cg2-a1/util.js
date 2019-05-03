@@ -39,38 +39,38 @@ const util = {
     return `#
       ${util._byte2hex(Math.floor(Math.random() * 256))}
       ${util._byte2hex(Math.floor(Math.random() * 256))}
-      ${util._byte2hex(Math.floor(Math.random() * 256))}`.replace(/\s+/gm, '');
+      ${util._byte2hex(Math.floor(Math.random() * 256))}`.replace(/\s+/gm, ''),
+      1.0;
+  },
+
+  /* Generates a random color in byte notation [0-255, 0-255, 0-255] */
+  randRGBByte: () => {
+    return [
+      Math.floor(Math.random() * 256),
+      Math.floor(Math.random() * 256),
+      Math.floor(Math.random() * 256)
+    ];
+  },
+
+  /* generates a random color in normalized notation [0-1, 0-1, 0-1] */
+  randRGBNorm: () => {
+    return [Math.random(), Math.random(), Math.random()];
+  },
+
+  /* interpolates between a and b with t from [0, 1] */
+  interpol: (a, b, t) => {
+    return (1 - t) * a + t * b;
+  },
+
+  /* interpolates rgba channels between colora and colorb with t from [0, 1] */
+  interpolRGBA: (colora, colorb, t) => {
+    let oot = 1 - t;
+    return [
+      oot * colora[0] + t * colorb[0],
+      oot * colora[1] + t * colorb[1],
+      oot * colora[2] + t * colorb[2]
+    ];
   }
-};
-
-// generates a random color in byte notation [0-255, 0-255, 0-255]
-util.randRGBByte = () => {
-  return [
-    Math.floor(Math.random() * 256),
-    Math.floor(Math.random() * 256),
-    Math.floor(Math.random() * 256)
-  ];
-};
-
-// generates a random color in normalized notation [0-1, 0-1, 0-1]
-util.randRGBNorm = () => {
-  return [Math.random(), Math.random(), Math.random()];
-};
-
-// interpolates between a and b with t from [0, 1]
-util.interpol = (a, b, t) => {
-  return (1 - t) * a + t * b;
-};
-
-// interpolates rgba channels between colora and colorb with t from [0, 1]
-util.lerpRGBA = (colora, colorb, t) => {
-  let oot = 1 - t;
-  return [
-    oot * colora[0] + t * colorb[0],
-    oot * colora[1] + t * colorb[1],
-    oot * colora[2] + t * colorb[2],
-    oot * colora[3] + t * colorb[3]
-  ];
 };
 
 export default util;

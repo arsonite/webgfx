@@ -15,11 +15,10 @@ class CircularEmitter extends ParticleEmitter {
   constructor(config) {
     super(config);
 
-    this.velocity = config.velocity !== _ ? config.velocity : { vx: 0, vy: 0 };
-
     this.radius = config.radius !== _ ? config.radius : 50;
     this.period = this.random ? _ : config.period !== _ ? config.period : 100;
 
+    /* Places a dragger inthe centre of the circle and on the right side of the radius */
     this.draggers = [new Dragger(this.coordinates), new Dragger({ x: this.coordinates.x + this.radius, y: this.coordinates.y })];
   }
 
@@ -35,6 +34,17 @@ class CircularEmitter extends ParticleEmitter {
 
     this.counter++;
     if (this.counter % this.interval === 0) this.emit(partSys);
+  };
+
+  /**
+   * 
+   */
+  render = context => {
+    context.beginPath();
+    context.arc(this.coordinates.x, this.coordinates.y, this.radius, 0, 2 * Math.PI, false);
+    context.lineWidth = 1;
+    context.strokeStyle = '#FFF';
+    context.stroke();
   };
 
   /**

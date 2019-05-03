@@ -18,11 +18,14 @@ class ParticleSystem {
     this.emitter = config.emitter;
 
     this.src = config.src;
-    this.acceleration = -1;
+    this.acceleration = config.acceleration;
 
     this.particles = [];
   }
 
+  /**
+   * 
+   */
   create = (n = 1) => {
     if (this.particles.length + n > this.MAX_AMOUNT) return;
     for (let i = 0; i < n; i++) {
@@ -30,16 +33,19 @@ class ParticleSystem {
         new Particle(
           this.emitter.position,
           this.emitter.velocity,
-          //{ vx: util.rand(-1, 1), vy: util.rand(-1, 1) },
-          util.rand(10, 100),
-          util.rand(1, 10),
-          util.randRGBHex(),
-          this.src
+          this.emitter.lifetime,
+          this.emitter.size,
+          util.randRGBByte(),
+          this.src,
+          this.emitter.die
         )
       );
     }
   };
 
+  /**
+   * 
+   */
   render = context => {
     this.getDraggers().forEach(dragger => {
       dragger.render(context);
@@ -48,18 +54,26 @@ class ParticleSystem {
     this.particles.forEach(particle => {
       particle.render(context);
     });
+
+    this.emitter.render(context);
   };
 
+  /**
+   * 
+   */
   update = () => {
     // update the emitter
     this.emitter.update(this);
 
     /* Observes particle lifetime and removes them from array when reaching 0 */
     this.particles.forEach((particle, i) => {
-      particle.lifetime > 0 ? particle.update() : this.particles.splice(i, 1);
+      particle.lifetime > 0 ? particle.update(this.acceleration) : this.particles.splice(i, 1);
     });
   };
 
+  /**
+   * 
+   */
   getDraggers() {
     return this.emitter.draggers;
   }

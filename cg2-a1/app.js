@@ -16,6 +16,7 @@ window.onload = () => {
   // get our canvas
   let canvas = util.byid('canvas2d');
   if (!canvas) util.fatal('canvas not found...');
+  /* Makes canvas resize with window when window.resize event is fired */
   const f = 1.0;
   canvas.height = canvas.offsetHeight * f;
   canvas.width = canvas.offsetWidth * f;
@@ -34,26 +35,33 @@ window.onload = () => {
   let standard = new ParticleSystem({
     emitter: new ParticleEmitter({
       coordinates: { x: 150, y: 150 },
-      velocity: { vx: 1, vy: 1 },
+      velocity: 1000,
+      lifetime: [10, 500],
+      size: [10, 50],
+      die: 'fade',
       interval: 1,
       n: 1
     }),
-    context: context,
     max_amount: 100,
-    src: './res/snowflake.svg'
+    src: './res/snowflake.svg',
+    context: context
   });
   emitters.push(standard);
 
   let circular = new ParticleSystem({
     emitter: new CircularEmitter({
       coordinates: { x: 100, y: 500 },
+      velocity: [-0.25, 0.25],
+      lifetime: [1, 100],
+      size: [1, 10],
+      die: { 'colorize': [250, 250, 250] },
       radius: 75,
       period: 100,
       interval: 1,
-      n: 1
+      n: 10
     }),
-    context: context,
-    max_amount: 1000
+    max_amount: 1000,
+    context: context
   });
   emitters.push(circular);
 
