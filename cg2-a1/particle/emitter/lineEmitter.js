@@ -78,9 +78,9 @@ class LineEmitter extends ParticleEmitter {
      */
     place = () => {
         /* */
-        let counterPercentage = ((this.counter * 100) / this.period) / 100;
+        let percentage = ((this.counter * 100) / this.period) / 100;
         /* */
-        let dist = this.MAX_DISTANCE * counterPercentage;
+        let dist = this.MAX_DISTANCE * percentage;
         let index = 0;
         /* */
         this.distances.forEach((distance, i) => {
@@ -89,22 +89,23 @@ class LineEmitter extends ParticleEmitter {
                 return;
             }
         });
-        if (counterPercentage >= 1.0) this.counter = 0; // Resets the counter when 100%/1.0 is reached
-        dist = this.distances[index] - dist;
+        if (percentage >= 1.0) this.counter = 0; // Resets the counter when 100%/1.0 is reached
+
+        let distancePercentage = ((this.distances[index] * 100) / this.MAX_DISTANCE) / 100;
+        let temp = this.distances[index];
+
+        console.log(distancePercentage);
 
         /* Create a point from the line to its next */
         let p1 = this.coordinates[index];
-        let p2 = this.coordinates[index++];
+        let p2 = this.coordinates[index + 1];
 
-        /*
-        let localPercentage = ;
-        let t = ;
+        let t = ((currentDistance * 100) / distancePercentage / 100);
 
         this.position = {
             x: (1 - t) * p1.x + (t * p2.x), // x = (1 - t) * x0 + t * x1
             y: (1 - t) * p1.y + (t * p2.y) // y = (1 - t) * y0 + t * y1
         };
-        */
     };
 }
 export default LineEmitter;
