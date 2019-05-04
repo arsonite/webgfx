@@ -61,10 +61,6 @@ class ParticleSystem {
    * 
    */
   render = context => {
-    this.getDraggers().forEach(dragger => {
-      dragger.render(context);
-    });
-
     this.particles.forEach(particle => {
       particle.render(context);
     });

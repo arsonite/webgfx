@@ -1,3 +1,5 @@
+import ParticleSystem from '../particle/particleSystem.js';
+
 /**
  * Initially created by Martin Puse (C) at Beuth University
  * Extended and built upon by Burak Günaydin (853872)
@@ -16,8 +18,23 @@ class Controller {
       dxy: []
     };
 
+    this.debug = true;
+
     this.listen();
   }
+
+  switchDebug = () => {
+    this.debug = !this.debug;
+    this.scene.actors.forEach(actor => {
+      if (actor instanceof ParticleSystem) {
+        if (this.debug) {
+          this.scene.add(actor.getDraggers());
+        } else {
+          this.scene.remove(actor.getDraggers());
+        }
+      }
+    });
+  };
 
   listen = () => {
     let canvas = this.context.canvas;

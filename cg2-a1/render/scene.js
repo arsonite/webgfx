@@ -2,8 +2,6 @@
  * Initially created by Martin Puse (C) at Beuth University
  * Extended and built upon by Burak Günaydin (853872)
  */
-import util from '../util.js';
-
 import Dragger from '../dragger.js';
 
 /**
@@ -17,21 +15,24 @@ class Scene {
 
   /* Add actors to the scene */
   add = actors => {
-    for (let actor of actors) {
-      if (
-        typeof actor.render !== 'function' ||
-        typeof actor.update !== 'function'
-      ) {
-        continue;
+    actors.forEach(actor => {
+      {
+        if (
+          typeof actor.render !== 'function' ||
+          typeof actor.update !== 'function'
+        ) {
+          return;
+        }
+        this.actors.push(actor);
       }
-      this.actors.push(actor);
-    }
+    });
   };
 
   /* Removes actors from the scene */
   remove = actors => {
     for (let actor of actors) {
       let id = this.actors.indexOf(actor);
+      console.log(id);
       if (id !== -1) {
         this.actors.splice(id, 1);
       }
@@ -54,17 +55,17 @@ class Scene {
 
   move = pos => {
     this.actors.forEach(actor => {
-      actor.getDraggers().forEach(dragger => {
-        dragger.drag(pos);
-      })
-    });
-  }
+      if (actor instanceof Dragger) {
+        actor.drag(pos);
+      }
+    })
+  };
 
   pick = pos => {
     this.actors.forEach(actor => {
-      actor.getDraggers().forEach(dragger => {
-        dragger.isHit(pos);
-      })
+      if (actor instanceof Dragger) {
+        actor.isHit(pos);
+      }
     });
   };
 }

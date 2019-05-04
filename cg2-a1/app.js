@@ -52,10 +52,12 @@ window.onload = () => {
   let linear = new ParticleSystem({
     emitter: new LineEmitter({
       coordinates: [[100, 100], [150, 150], [250, 150], [300, 200]],
+      //velocity: [-0.25, 0.25],
       velocity: 0,
-      lifetime: [10, 250],
+      //lifetime: [10, 250],
+      lifetime: 100,
       size: [1, 5],
-      die: 'fade',
+      //die: 'fade',
       interval: 1,
       n: 1
     }),
@@ -100,13 +102,18 @@ window.onload = () => {
 
   // create and populate our scene
   let scene = new Scene();
+  scene.add(emitters);
   emitters.forEach(emitter => {
-    scene.add([emitter]);
+    scene.add(emitter.getDraggers());
   });
 
   // stick the engine together
   let controller = new Controller(context, scene);
   let renderer = new Renderer(context, 'rgb(10, 20, 30)');
+
+  /* Register the checkbox-button for the debug-mode and connect it with the controller */
+  let debugCheckbox = util.byid('debug');
+  debugCheckbox.onclick = () => controller.switchDebug();
 
   // for fps measuring
   var before = 0;

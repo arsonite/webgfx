@@ -23,11 +23,25 @@ class LineEmitter extends ParticleEmitter {
             this.coordinates.push(point);
             this.draggers.push(new Dragger(point));
         });
+        this.updateDistances();
 
         this.period = config.period !== _ ? config.period : 100;
+    }
 
-        this.MAX_DISTANCE = 0;
+    /**
+     * 
+     */
+    updateDistances = () => {
         this.distances = [];
+        this.MAX_DISTANCE = 0;
+        this.coordinates.forEach((coordinate, i) => {
+            if (i + 1 >= this.coordinates.length) return;
+
+            let nextPoint = this.coordinates[i + 1];
+            let distance = coordinate.getDistance(nextPoint);
+            this.distances.push(distance);
+            this.MAX_DISTANCE += distance;
+        });
     }
 
     /**
@@ -38,6 +52,8 @@ class LineEmitter extends ParticleEmitter {
             this.coordinates[i].x = dragger.position.x;
             this.coordinates[i].y = dragger.position.y;
         });
+
+        this.updateDistances();
 
         this.counter++;
         if (this.counter % this.interval === 0) this.emit(partSys);
@@ -61,17 +77,34 @@ class LineEmitter extends ParticleEmitter {
      * 
      */
     place = () => {
-        let p1 = this.coordinates[0];
-        let p2 = this.coordinates[1];
-        let distance = p1.getDistance(p2);
         /* */
-        let t = (this.counter * distance) / this.period / distance;
-        if (t > 1.0) this.counter = 0;
-        /* 
-         * x = (1 - t) * x0 + t * x1
-         * y = (1 - t) * y0 + t * y1
-         */
-        this.position = { x: (1 - t) * p1.x + (t * p2.x), y: (1 - t) * p1.y + (t * p2.y) };
+        let counterPercentage = ((this.counter * 100) / this.period) / 100;
+        /* */
+        let dist = this.MAX_DISTANCE * counterPercentage;
+        let index = 0;
+        /* */
+        this.distances.forEach((distance, i) => {
+            if (dist <= distance) {
+                index = i
+                return;
+            }
+        });
+        if (counterPercentage >= 1.0) this.counter = 0; // Resets the counter when 100%/1.0 is reached
+        dist = this.distances[index] - dist;
+
+        /* Create a point from the line to its next */
+        let p1 = this.coordinates[index];
+        let p2 = this.coordinates[index++];
+
+        /*
+        let localPercentage = ;
+        let t = ;
+
+        this.position = {
+            x: (1 - t) * p1.x + (t * p2.x), // x = (1 - t) * x0 + t * x1
+            y: (1 - t) * p1.y + (t * p2.y) // y = (1 - t) * y0 + t * y1
+        };
+        */
     };
 }
 export default LineEmitter;
