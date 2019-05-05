@@ -60,34 +60,22 @@ class BezierEmitter extends ParticleEmitter {
     };
 
     place = () => {
+        /* If the period is undefined, assign as random t [0-1], if not calculate the t from the counter */
         let t = this.pediod === _ ? Math.random() : ((this.counter * 100) / this.period) / 100;
         if (t >= 1.0) this.counter = 0; // Resets the counter when 100%/1.0 is reached
 
-        let x, y;
+        let x = 0;
+        let y = 0;
+        let n = this.coordinates.length - 1;
         this.coordinates.forEach((coordinate, i) => {
-            let a0 = (1 - t) * this.coordinates[0].x + t * this.coordinates[1].x;
-            let a1 = (1 - t) * this.coordinates[1].x + t * this.coordinates[2].x;
-            let a2 = (1 - t) * this.coordinates[2].x + t * this.coordinates[3].x;
+            let f = i === 0 || i === n ? 1 : n;
 
-            let b0 = (1 - t) * a0 + t * a1;
-            let b1 = (1 - t) * a1 + t * a2;
-
-            let c = (1 - t) * b0 + t * b1;
-
-            x = c;
-
-            a0 = (1 - t) * this.coordinates[0].y + t * this.coordinates[1].y;
-            a1 = (1 - t) * this.coordinates[1].y + t * this.coordinates[2].y;
-            a2 = (1 - t) * this.coordinates[2].y + t * this.coordinates[3].y;
-
-            b0 = (1 - t) * a0 + t * a1;
-            b1 = (1 - t) * a1 + t * a2;
-
-            c = (1 - t) * b0 + t * b1;
-
-            y = c;
+            /* General bezier-formula: (n) = t^i * (1 - t)^n-i * pi
+             *                         (i)
+             */
+            x += f * Math.pow(t, i) * Math.pow(1 - t, n - i) * coordinate.x;
+            y += f * Math.pow(t, i) * Math.pow(1 - t, n - i) * coordinate.y;
         });
-
         this.position = new Point(x, y);
     };
 }
