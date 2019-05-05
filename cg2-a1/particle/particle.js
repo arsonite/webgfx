@@ -4,10 +4,19 @@
  */
 import util from "../util.js";
 
+import Point from "../point.js";
+
 const _ = undefined;
 
 /**
- *
+ * 
+ * @param position,
+ * @param velocity,
+ * @param lifetime,
+ * @param size,
+ * @param color,
+ * @param src,
+ * @param die
  */
 class Particle {
   constructor(position, velocity, lifetime, size, color, src, die) {
@@ -21,7 +30,7 @@ class Particle {
     } else if (Array.isArray(velocity)) {
       this.velocity.x = util.rand(velocity[0], velocity[1]);
       this.velocity.y = util.rand(velocity[0], velocity[1]);
-    } else if (typeof velocity === 'object') {
+    } else if (velocity instanceof Point) {
       this.velocity = Object.assign({}, velocity);
     } else if (velocity === _) {
       this.velocity = { x: 0, y: 0 }

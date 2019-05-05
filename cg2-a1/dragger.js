@@ -1,10 +1,15 @@
 /**
- * Initially created by Burak Günaydin (853872) at Beuth University
+ * Created by Burak Günaydin (853872) at Beuth University
  */
 
 const _ = undefined;
 const colors = ['#F00', '#0F0'];
 
+/**
+ * 
+ * 
+ * @param,
+ */
 class Dragger {
   constructor(position) {
     this.position = position;
@@ -33,9 +38,8 @@ class Dragger {
 
   drag = newPosition => {
     if (this.hit) {
-      this.position = {
-        x: newPosition[0], y: newPosition[1]
-      };
+      this.position.x = newPosition[0];
+      this.position.y = newPosition[1];
       this.color = colors[1];
       return;
     }

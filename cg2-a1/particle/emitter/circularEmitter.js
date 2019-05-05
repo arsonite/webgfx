@@ -5,32 +5,39 @@
 import ParticleEmitter from './particleEmitter.js';
 
 import Dragger from '../../dragger.js';
+import Point from '../../point.js';
 
 const _ = undefined;
 
 /**
+ * A circular particle emitter, that emits particle dependent on the given angles
  * 
+ * @param config.radius, The radius of the 
+ * @param config.period, 
  */
 class CircularEmitter extends ParticleEmitter {
   constructor(config) {
     super(config);
 
+    /* The radius of the circle which spawns the particles */
     this.radius = config.radius !== _ ? config.radius : 50;
-    this.period = this.random ? _ : config.period !== _ ? config.period : 100;
+    /* One period around the circle */
+    this.period = config.period !== _ ? config.period : 'none';
 
-    /* Places a dragger inthe centre of the circle and on the right side of the radius */
-    this.draggers = [new Dragger(this.coordinates), new Dragger({ x: this.coordinates.x + this.radius, y: this.coordinates.y })];
+    /* Places a dragger in the centre of the circle and on the right side of the radius */
+    this.draggers = [
+      new Dragger(this.coordinates[0]),
+      new Dragger(new Point(this.coordinates[0].x + this.radius, this.coordinates[0].y))
+    ];
   }
 
   /**
    *
    */
   update = partSys => {
-    this.coordinates = this.draggers[0].position;
+    this.coordinates[0] = this.draggers[0].position;
 
-    /* Distance formular: Square root of (x - a)^2 + (y - b)^2 */
-    const distance = Math.sqrt(Math.pow((this.draggers[1].position.x - this.draggers[0].position.x), 2) + Math.pow((this.draggers[1].position.y - this.draggers[0].position.y), 2));
-    this.radius = distance;
+    this.radius = this.draggers[0].getDistance(this.draggers[1]);
 
     this.counter++;
     if (this.counter % this.interval === 0) this.emit(partSys);
@@ -41,7 +48,7 @@ class CircularEmitter extends ParticleEmitter {
    */
   render = context => {
     context.beginPath();
-    context.arc(this.coordinates.x, this.coordinates.y, this.radius, 0, 2 * Math.PI, false);
+    context.arc(this.coordinates[0].x, this.coordinates[0].y, this.radius, 0, 2 * Math.PI, false);
     context.lineWidth = 1;
     context.strokeStyle = '#FFF';
     context.stroke();
@@ -52,17 +59,17 @@ class CircularEmitter extends ParticleEmitter {
    */
   place = () => {
     let angle;
-    if (this.random) {
+    if (this.period === 'none') {
       angle = Math.random() * Math.PI * 2; // Calculates a random circular angle
     } else {
       /* Calculates the placement angle dependent on the current timer-count */
       angle = ((this.counter * 360) / this.period / 360) * Math.PI * 2;
     }
 
-    this.position = {
-      x: this.coordinates.x + Math.cos(angle) * this.radius,
-      y: this.coordinates.y + Math.sin(angle) * this.radius
-    };
+    this.position = new Point(
+      this.coordinates[0].x + Math.cos(angle) * this.radius,
+      this.coordinates[0].y + Math.sin(angle) * this.radius
+    );
   };
 }
 export default CircularEmitter;

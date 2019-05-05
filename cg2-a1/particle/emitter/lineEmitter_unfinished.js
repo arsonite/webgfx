@@ -10,19 +10,12 @@ import Point from '../../point.js';
 const _ = undefined;
 
 /**
- * 
+ * Unfinished linear emitter
  */
 class LineEmitter extends ParticleEmitter {
     constructor(config) {
         super(config);
 
-        this.coordinates = [];
-        this.draggers = [];
-        config.coordinates.forEach(coordinate => {
-            let point = new Point(coordinate[0], coordinate[1]);
-            this.coordinates.push(point);
-            this.draggers.push(new Dragger(point));
-        });
         this.updateDistances();
 
         this.period = config.period !== _ ? config.period : 100;
@@ -92,9 +85,7 @@ class LineEmitter extends ParticleEmitter {
         if (percentage >= 1.0) this.counter = 0; // Resets the counter when 100%/1.0 is reached
 
         let distancePercentage = ((this.distances[index] * 100) / this.MAX_DISTANCE) / 100;
-        let temp = this.distances[index];
-
-        console.log(distancePercentage);
+        let currentDistance = this.distances[index];
 
         /* Create a point from the line to its next */
         let p1 = this.coordinates[index];

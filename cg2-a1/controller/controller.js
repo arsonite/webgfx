@@ -1,9 +1,8 @@
-import ParticleSystem from '../particle/particleSystem.js';
-
 /**
  * Initially created by Martin Puse (C) at Beuth University
  * Extended and built upon by Burak Günaydin (853872)
  */
+import ParticleSystem from '../particle/particleSystem.js';
 
 /**
  * Encapsulates interaction responses and head up display things like menus.
@@ -23,6 +22,9 @@ class Controller {
     this.listen();
   }
 
+  /**
+   * Flips the debug attribute of the controller and adds/removes draggers from the scene
+   */
   switchDebug = () => {
     this.debug = !this.debug;
     this.scene.actors.forEach(actor => {
@@ -47,6 +49,7 @@ class Controller {
       mouse.dxy[1] = newpos[1] - mouse.pos[1];
       mouse.pos = newpos;
 
+      /* Move-event for draggers with the current context-position as the single argument */
       this.scene.move(this.contextPos(event));
     };
 
@@ -59,6 +62,7 @@ class Controller {
       this.scene.pick(this.contextPos(event));
     };
 
+    /* A "hack" to ensure a 100% miss of click event to let go of the dragger */
     canvas.onmouseup = event => {
       this.scene.pick([-1, -1]);
     };

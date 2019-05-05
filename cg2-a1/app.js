@@ -5,7 +5,6 @@ import Controller from './controller/controller.js';
 
 import ParticleSystem from './particle/particleSystem.js';
 import ParticleEmitter from './particle/emitter/particleEmitter.js';
-import LineEmitter from './particle/emitter/lineEmitter.js';
 import CircularEmitter from './particle/emitter/circularEmitter.js';
 
 import util from './util.js';
@@ -17,6 +16,7 @@ window.onload = () => {
   // get our canvas
   let canvas = util.byid('canvas2d');
   if (!canvas) util.fatal('canvas not found...');
+
   /* Makes canvas resize with window when window.resize event is fired */
   const f = 1.0;
   canvas.height = canvas.offsetHeight * f;
@@ -35,7 +35,7 @@ window.onload = () => {
 
   let basic = new ParticleSystem({
     emitter: new ParticleEmitter({
-      coordinates: { x: 800, y: 800 },
+      coordinates: [[800, 800]],
       lifetime: [10, 100],
       size: [10, 25],
       color: [256, 256, 0],
@@ -49,26 +49,9 @@ window.onload = () => {
   });
   emitters.push(basic);
 
-  let linear = new ParticleSystem({
-    emitter: new LineEmitter({
-      coordinates: [[100, 100], [150, 150], [250, 150], [300, 200]],
-      //velocity: [-0.25, 0.25],
-      velocity: 0,
-      //lifetime: [10, 250],
-      lifetime: 100,
-      size: [1, 5],
-      //die: 'fade',
-      interval: 1,
-      n: 1
-    }),
-    max_amount: 100,
-    context: context
-  });
-  emitters.push(linear);
-
   let snowflakes = new ParticleSystem({
     emitter: new ParticleEmitter({
-      coordinates: { x: 450, y: 600 },
+      coordinates: [[450, 600]],
       velocity: [-3, 3],
       lifetime: [10, 500],
       size: [10, 50],
@@ -85,7 +68,7 @@ window.onload = () => {
 
   let circular = new ParticleSystem({
     emitter: new CircularEmitter({
-      coordinates: { x: 100, y: 500 },
+      coordinates: [[100, 600]],
       velocity: [-0.25, 0.25],
       lifetime: [1, 100],
       size: [1, 10],
@@ -100,7 +83,7 @@ window.onload = () => {
   });
   emitters.push(circular);
 
-  // create and populate our scene
+  /* Create and populate our scene */
   let scene = new Scene();
   scene.add(emitters);
   emitters.forEach(emitter => {
