@@ -4,7 +4,7 @@
  */
 import ParticleEmitter from './particleEmitter.js';
 
-import Dragger from '../../dragger.js';
+import Dragger from '../../util/dragger.js';
 
 const _ = undefined;
 

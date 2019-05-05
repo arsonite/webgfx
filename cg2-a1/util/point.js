@@ -16,8 +16,7 @@ class Point {
 
     /**
      * A function to calculate the distance between point a and point b.
-     * Based on the following calculation:
-     * 
+     * Based on the distance formular: Square root of (a - x)^2 + (b - y)^2
      */
     getDistance = (point) => {
         return Math.sqrt(Math.pow((point.x - this.x), 2) + Math.pow((point.y - this.y), 2));

@@ -1,14 +1,14 @@
 /**
  * Created by Burak Günaydin (853872) at Beuth University
  */
-
 const _ = undefined;
 const colors = ['#F00', '#0F0'];
 
 /**
+ * Class responsible for the logic and rendering of draggers
+ * inside the canvas-context
  * 
- * 
- * @param,
+ * @param position, The position of the dragger in the context
  */
 class Dragger {
   constructor(position) {
@@ -31,7 +31,7 @@ class Dragger {
   update = () => { };
 
   isHit = pos => {
-    /* Formular to determine if point is within circle of dragger: Point is within circle if (x - a)^2 + (y - b)^2 < r^2 */
+    /* Formular to determine if point is within circle of dragger: (x - a)^2 + (y - b)^2 < r^2 */
     const point = Math.pow(pos[0] - this.position.x, 2) + Math.pow(pos[1] - this.position.y, 2);
     this.hit = point < Math.pow(this.radius, 2);
   };

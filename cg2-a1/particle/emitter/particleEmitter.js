@@ -2,8 +2,8 @@
  * Initially created by Martin Puse (C) at Beuth University
  * Extended and built upon by Burak Günaydin (853872)
  */
-import Dragger from '../../dragger.js';
-import Point from '../../point.js';
+import Dragger from '../../util/dragger.js';
+import Point from '../../util/point.js';
 
 const _ = undefined;
 

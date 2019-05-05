@@ -4,8 +4,8 @@
  */
 import ParticleEmitter from './particleEmitter.js';
 
-import Dragger from '../../dragger.js';
-import Point from '../../point.js';
+import Dragger from '../../util/dragger.js';
+import Point from '../../util/point.js';
 
 const _ = undefined;
 
@@ -31,13 +31,11 @@ class CircularEmitter extends ParticleEmitter {
     ];
   }
 
-  /**
-   *
-   */
   update = partSys => {
     this.coordinates[0] = this.draggers[0].position;
 
-    this.radius = this.draggers[0].getDistance(this.draggers[1]);
+    /* Calculating the distance between the two draggers of the circle */
+    this.radius = this.draggers[0].position.getDistance(this.draggers[1].position);
 
     this.counter++;
     if (this.counter % this.interval === 0) this.emit(partSys);

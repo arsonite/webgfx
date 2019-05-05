@@ -1,3 +1,7 @@
+/**
+ * Initially created by Martin Puse (C) at Beuth University
+ * Extended and built upon by Burak Günaydin (853872)
+ */
 import Renderer from './render/renderer.js';
 import Scene from './render/scene.js';
 
@@ -7,7 +11,7 @@ import ParticleSystem from './particle/particleSystem.js';
 import ParticleEmitter from './particle/emitter/particleEmitter.js';
 import CircularEmitter from './particle/emitter/circularEmitter.js';
 
-import util from './util.js';
+import util from './util/util.js';
 
 // called when the index.html is loaded by the browser
 window.onload = () => {
@@ -33,7 +37,7 @@ window.onload = () => {
   /* ParticleEmitters and their respective configurations */
   let emitters = [];
 
-  let basic = new ParticleSystem({
+  let flames = new ParticleSystem({
     emitter: new ParticleEmitter({
       coordinates: [[800, 800]],
       lifetime: [10, 100],
@@ -47,11 +51,11 @@ window.onload = () => {
     max_amount: 100,
     context: context
   });
-  emitters.push(basic);
+  emitters.push(flames);
 
   let snowflakes = new ParticleSystem({
     emitter: new ParticleEmitter({
-      coordinates: [[450, 600]],
+      coordinates: [[450, 200]],
       velocity: [-3, 3],
       lifetime: [10, 500],
       size: [10, 50],
@@ -66,9 +70,9 @@ window.onload = () => {
   });
   emitters.push(snowflakes);
 
-  let circular = new ParticleSystem({
+  let circle = new ParticleSystem({
     emitter: new CircularEmitter({
-      coordinates: [[100, 600]],
+      coordinates: [[200, 600]],
       velocity: [-0.25, 0.25],
       lifetime: [1, 100],
       size: [1, 10],
@@ -81,7 +85,7 @@ window.onload = () => {
     max_amount: 1000,
     context: context
   });
-  emitters.push(circular);
+  emitters.push(circle);
 
   /* Create and populate our scene */
   let scene = new Scene();
