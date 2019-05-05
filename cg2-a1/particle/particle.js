@@ -69,6 +69,8 @@ class Particle {
     if (die !== _) {
       if (die['colorize'] !== _) {
         this.endColor = die['colorize'];
+      } else if (die === 'fade') {
+        this.fade = true;
       }
     }
 

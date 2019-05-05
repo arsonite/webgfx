@@ -10,6 +10,8 @@ import Controller from './controller/controller.js';
 import ParticleSystem from './particle/particleSystem.js';
 import ParticleEmitter from './particle/emitter/particleEmitter.js';
 import CircularEmitter from './particle/emitter/circularEmitter.js';
+import BezierEmitter from './particle/emitter/bezierEmitter.js';
+import ParametricEmitter from './particle/emitter/parametricEmitter.js';
 
 import util from './util/util.js';
 
@@ -55,7 +57,7 @@ window.onload = () => {
 
   let snowflakes = new ParticleSystem({
     emitter: new ParticleEmitter({
-      coordinates: [[450, 200]],
+      coordinates: [[500, 350]],
       velocity: [-3, 3],
       lifetime: [10, 500],
       size: [10, 50],
@@ -86,6 +88,38 @@ window.onload = () => {
     context: context
   });
   emitters.push(circle);
+
+  let bezier = new ParticleSystem({
+    emitter: new BezierEmitter({
+      coordinates: [[150, 100], [100, 200], [250, 150], [50, 350], [100, 450]],
+      velocity: [-0.15, 0.15],
+      lifetime: [1, 150],
+      size: [5, 25],
+      period: 100,
+      interval: 1,
+      n: 1,
+      die: 'fade'
+    }),
+    src: './res/star.svg',
+    max_amount: 150,
+    context: context
+  });
+  emitters.push(bezier);
+
+  let parametric = new ParticleSystem({
+    emitter: new ParametricEmitter({
+      coordinates: [[300, 300], [250, 400], [350, 500], [150, 600]],
+      velocity: [0, 0.25],
+      lifetime: [1, 100],
+      size: 25,
+      period: 100,
+      interval: 1,
+      n: 1,
+      die: 'fade'
+    }),
+    max_amount: 1000,
+    context: context
+  });
 
   /* Create and populate our scene */
   let scene = new Scene();

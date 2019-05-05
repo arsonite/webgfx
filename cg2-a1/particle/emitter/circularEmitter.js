@@ -22,7 +22,7 @@ class CircularEmitter extends ParticleEmitter {
     /* The radius of the circle which spawns the particles */
     this.radius = config.radius !== _ ? config.radius : 50;
     /* One period around the circle */
-    this.period = config.period !== _ ? config.period : 'none';
+    this.period = config.period;
 
     /* Places a dragger in the centre of the circle and on the right side of the radius */
     this.draggers = [
@@ -44,7 +44,9 @@ class CircularEmitter extends ParticleEmitter {
   /**
    * 
    */
-  render = context => {
+  render = (context, debug) => {
+    if (!debug) return;
+
     context.beginPath();
     context.arc(this.coordinates[0].x, this.coordinates[0].y, this.radius, 0, 2 * Math.PI, false);
     context.lineWidth = 1;
@@ -57,7 +59,7 @@ class CircularEmitter extends ParticleEmitter {
    */
   place = () => {
     let angle;
-    if (this.period === 'none') {
+    if (this.period === _) {
       angle = Math.random() * Math.PI * 2; // Calculates a random circular angle
     } else {
       /* Calculates the placement angle dependent on the current timer-count */

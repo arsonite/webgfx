@@ -65,12 +65,12 @@ class ParticleSystem {
     }
   };
 
-  render = context => {
+  render = (context, debug) => {
     this.particles.forEach(particle => {
       particle.render(context);
     });
 
-    this.emitter.render(context);
+    this.emitter.render(context, debug);
   };
 
   update = () => {

@@ -23,7 +23,7 @@ class Renderer {
     this.clear();
 
     /* render the scene */
-    scene.render(this.context);
+    scene.render(this.context, controller.debug);
 
     /* render the hud over the scene */
     controller.render();

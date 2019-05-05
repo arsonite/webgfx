@@ -4,6 +4,8 @@
  */
 import Dragger from '../util/dragger.js';
 
+import ParticleEmitter from '../particle/emitter/particleEmitter.js';
+
 /**
  * Ordered collection of actors.
  * Actors must provide a render/update interface.
@@ -46,10 +48,10 @@ class Scene {
   };
 
   /* Render all actor in array order */
-  render = context => {
-    for (let actor of this.actors) {
-      actor.render(context);
-    }
+  render = (context, debug) => {
+    this.actors.forEach(actor => {
+      actor.render(context, debug);
+    });
   };
 
   /**

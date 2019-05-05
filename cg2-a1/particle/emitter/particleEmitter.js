@@ -54,7 +54,7 @@ class ParticleEmitter {
   }
 
   /* Optional render method, that renders the form of the emitter */
-  render = context => { };
+  render = (context, debug) => { };
 
   /**
    * Updates the coordinates of the particle emitter dependent on the position of its dragger

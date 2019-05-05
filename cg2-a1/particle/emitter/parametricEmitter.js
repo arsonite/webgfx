@@ -1,10 +1,10 @@
 /**
- * Initially created by Martin Puse (C) at Beuth University
- * Extended and built upon by Burak Günaydin (853872)
+ * Created by Martin Puse (C) at Beuth University
  */
 import ParticleEmitter from './particleEmitter.js';
 
 import Dragger from '../../util/dragger.js';
+import Point from '../../util/point.js';
 
 const _ = undefined;
 
