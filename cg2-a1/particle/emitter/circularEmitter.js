@@ -41,9 +41,6 @@ class CircularEmitter extends ParticleEmitter {
     if (this.counter % this.interval === 0) this.emit(partSys);
   };
 
-  /**
-   * 
-   */
   render = (context, debug) => {
     if (!debug) return;
 
@@ -54,9 +51,6 @@ class CircularEmitter extends ParticleEmitter {
     context.stroke();
   };
 
-  /**
-   * 
-   */
   place = () => {
     let angle;
     if (this.period === _) {

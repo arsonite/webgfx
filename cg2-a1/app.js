@@ -91,7 +91,7 @@ window.onload = () => {
 
   let bezier = new ParticleSystem({
     emitter: new BezierEmitter({
-      coordinates: [[150, 100], [100, 200], [250, 250], [250, 350], [100, 450]],
+      coordinates: [[650, 100], [600, 200], [850, 250], [850, 350], [700, 450]],
       velocity: [-0.15, 0.15],
       lifetime: [1, 150],
       size: [5, 25],
@@ -107,7 +107,7 @@ window.onload = () => {
 
   let parametric = new ParticleSystem({
     emitter: new ParametricEmitter({
-      coordinates: [[650, 250], [500, 200]],
+      coordinates: [[25, 90], [65, 130]],
       velocity: [-0.5, 0.5],
       lifetime: [1, 100],
       size: 10,

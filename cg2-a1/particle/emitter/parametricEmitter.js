@@ -14,11 +14,55 @@ class ParametricEmitter extends ParticleEmitter {
     constructor(config) {
         super(config);
 
-        this.updateDistances();
-
         this.tRange = config.tRange;
         this.period = config.period;
+
+        this.updateDistances();
     }
+
+    /**
+     * Parametric functions
+     */
+    f(t) {
+        return this.coordinates[0].x + (this.coordinates[0].x * (-2 * t + Math.pow(t, 2)));
+    };
+    g(t) {
+        return this.coordinates[0].y + (this.coordinates[0].y * t);
+    };
+    /*
+    f(t) {
+        return this.coordinates[0].x * Math.sin(t);
+    };
+    g(t) {
+        return this.coordinates[0].y * Math.cos(t);
+    };
+    */
+
+    /* Rotating the parametric curve by determined angle
+     * https://www.youtube.com/watch?v=BPgq2AudoEo - How to Rotate any Curve by any Angle
+     */
+    u(t, a) {
+        return (t * Math.cos(a)) - (this.f(t) * Math.sin(a));
+    };
+    v(t, a) {
+        return (t * Math.sin(a)) + (this.g(t) * Math.cos(a));
+    };
+
+    /**
+     * 
+     */
+    calculateParametricCurve = (n) => {
+        this.curve = [];
+        let tMin = this.tRange[0];
+        let tMax = this.tRange[1];
+        let t = tMin;
+        for (let i = 0; i < n; i++) {
+            let delta = (tMax - tMin) / n;
+            //this.curve[i] = new Point(this.u(t, this.angle), this.v(t, this.angle));
+            this.curve[i] = new Point(this.f(t), this.g(t));
+            t = tMin + i * delta;
+        }
+    };
 
     /**
      * Updates the distances to reflect change of dragger movements
@@ -34,7 +78,9 @@ class ParametricEmitter extends ParticleEmitter {
             this.MAX_DISTANCE += distance;
         });
 
-        this.angle = this.coordinates[0].getAngle(this.coordinates[1]);
+        this.angle = this.coordinates[1].getAngle(this.coordinates[0]);
+
+        this.calculateParametricCurve(100);
     }
 
     update = partSys => {
@@ -49,51 +95,18 @@ class ParametricEmitter extends ParticleEmitter {
         if (this.counter % this.interval === 0) this.emit(partSys);
     };
 
-    getParametricCurve = (n) => {
-        let segments = [];
-
-        /* */
-        let x = t => { return Math.sin(t); }
-        let y = t => { return Math.cos(t); };
-
-        /* */
-        let u = (t, a) => { return t * Math.cos(a) - x(t) * Math.sin(a) };
-        let v = (t, a) => { return t * Math.sin(a) + y(t) * Math.cos(a) };
-
-        /* Rotating the parametric curve by determined angle
-         * https://www.youtube.com/watch?v=BPgq2AudoEo - How to Rotate any Curve by any Angle
-         */
-
-        let tMin = this.tRange[0];
-        let tMax = this.tRange[1];
-        let t = tMin; // 
-        for (let i = 0; i < n; i++) {
-            /* */
-            let delta = (tMax - tMin) / n;
-            /* */
-            //segments[i] = new Point(this.coordinates[0].x * u(t, this.angle), this.coordinates[0].y * v(t, this.angle));
-            segments[i] = new Point(this.coordinates[0].x * x(t), this.coordinates[0].y * y(t));
-            t = tMin + i * delta;
-        }
-        return segments;
-    };
-
     render = (context, debug) => {
         if (!debug) return;
 
-        let curve = this.getParametricCurve(100);
-        for (let i = 1; i < curve.length; i++) {
+        for (let i = 1; i < this.curve.length; i++) {
             context.beginPath();
+            context.moveTo(this.curve[i - 1].x, this.curve[i - 1].y);
+            context.lineTo(this.curve[i].x, this.curve[i].y);
             context.lineWidth = 1;
-            context.moveTo(curve[i - 1].x, curve[i - 1].y);
-            context.lineTo(curve[i].x, curve[i].y);
             context.stroke();
         }
     };
 
-    /**
-     * 
-     */
     place = () => {
         let t;
         if (this.period === _) {
@@ -101,10 +114,11 @@ class ParametricEmitter extends ParticleEmitter {
         } else {
             t = ((this.counter * 100) / this.period) / 100;
         }
+        if (t >= 1.0) this.counter = 0; // Resets the counter when 100%/1.0 is reached
         t = t * (this.tRange[1] - this.tRange[0]);
-        //if (t >= 1.0) this.counter = 0; // Resets the counter when 100%/1.0 is reached
 
-        //this.position = new Point(f(t), g(t));
+        //this.position = new Point(this.u(t, this.angle), this.v(t, this.angle));
+        this.position = new Point(this.f(t), this.g(t));
     };
 }
 export default ParametricEmitter;

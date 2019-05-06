@@ -22,19 +22,21 @@ class Point {
         return Math.sqrt(Math.pow((point.x - this.x), 2) + Math.pow((point.y - this.y), 2));
     };
 
+
     /**
      * A function to calculate the angle between two points
      */
-    getAngle = point => {
+    getAngle = (point, inDegrees = false) => {
         /* https://stackoverflow.com/questions/9970281/java-calculating-the-angle-between-two-points-in-degrees */
         let angle = Math.atan2(point.x - this.x, point.y - this.y);
-        /* Convert radians to degrees */
-        angle *= (180 / Math.PI);
-        /* Keeps the angle between 0 and 360 */
-        angle = angle + Math.ceil(-angle / 360) * 360;
+        if (inDegrees) {
+            /* Convert radians to degrees */
+            angle *= (180 / Math.PI);
+            /* Keeps the angle between 0 and 360 */
+            angle = angle + Math.ceil(-angle / 360) * 360;
+        }
         return angle;
-    };
-
+    }
 }
 
 export default Point;
