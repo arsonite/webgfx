@@ -95,7 +95,6 @@ window.onload = () => {
       velocity: [-0.15, 0.15],
       lifetime: [1, 150],
       size: [5, 25],
-      period: 100,
       interval: 1,
       n: 1,
       die: 'fade'
@@ -108,10 +107,11 @@ window.onload = () => {
 
   let parametric = new ParticleSystem({
     emitter: new ParametricEmitter({
-      coordinates: [[300, 300], [250, 400], [350, 500], [150, 600]],
-      velocity: [0, 0.25],
+      coordinates: [[650, 250], [500, 200]],
+      velocity: [-0.5, 0.5],
       lifetime: [1, 100],
-      size: 25,
+      size: 10,
+      tRange: [0, 5],
       period: 100,
       interval: 1,
       n: 1,
@@ -120,6 +120,7 @@ window.onload = () => {
     max_amount: 1000,
     context: context
   });
+  emitters.push(parametric);
 
   /* Create and populate our scene */
   let scene = new Scene();
