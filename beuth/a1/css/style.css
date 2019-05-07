@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  font-family: Arial, Helvetica;
+  box-sizing: border-box;
+}
+body {
+  overflow: hidden;
+  background-color: #353535;
+}
+body main #scene #debug_frame {
+  position: fixed;
+  z-index: 10;
+  top: 50px;
+  left: 10px;
+}
+body main #scene canvas {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+body main #debugger {
+  display: none;
+  height: 500px;
+  width: 100%;
+  background-color: #222;
+}
+body footer {
+  background-color: rgba(0, 0, 0, 0.5);
+}
