@@ -1,50 +1,55 @@
 <!DOCTYPE html>
+
 <head>
 	<meta charset="utf-8" />
 	<title>WebGL</title>
 
 	<link rel="stylesheet" type="text/css" media="screen" href="./style/index.css" />
 </head>
+
 <body>
-	<nav>
-		<div class="frame">
+	<div id="content">
+		<img id="webgl" src="./res/webgl_inverted.svg">
+
+		<nav>
+			<div class="frame">
 				<span>Beuth Projects (3D Web Graphics)</span>
 				<div id="3dwebgfx" class="links">
 					<div class="link">
 						<span>WebGL-Test</span>
 						<a href="./beuth/a0/a0-test/index.html">A0</a>
 					</div>
-		
+
 					<div class="link">
 						<span>CANVAS-ParticleSystem</span>
 						<a href="./beuth/a1/index.html">A1</a>
 					</div>
-		
+
 					<div class="link">
 						<a href="./beuth/a2/index.html">A2</a>
 					</div>
-		
+
 					<div class="link">
 						<a href="./beuth/a3/index.html">A3</a>
 					</div>
 				</div>
-		</div>
+			</div>
 
-		<div class="frame">
+			<div class="frame">
 				<span>Own Projects</span>
 				<div id="personal" class="links">
 					<div class="link">
-							<a href="./beuth/a1/index.html">Partilicious</a>
+						<a href="./partilicious/index.html">Partilicious</a>
 					</div>
 				</div>
-		</div>
-	</nav>
-	
-	<main>
-		<canvas id="main_canvas">
-			If you see this text, your browser probably does not support the HTML5
-			canvas 2D drawing context.
-		</canvas>
-	</main>
+			</div>
+		</nav>
+	</div>
+
+	<canvas>
+		If you see this text, your browser probably does not support the HTML5
+		canvas 2D drawing context.
+	</canvas>
 </body>
+
 </html>
