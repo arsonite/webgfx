@@ -45,7 +45,7 @@ window.onload = () => {
       lifetime: [10, 100],
       size: [10, 25],
       color: [256, 256, 0],
-      die: { 'colorize': [256, 0, 0] },
+      die: { colorize: [256, 0, 0] },
       interval: 1,
       n: 1
     }),
@@ -78,7 +78,7 @@ window.onload = () => {
       velocity: [-0.25, 0.25],
       lifetime: [1, 100],
       size: [1, 10],
-      die: { 'colorize': [256, 256, 256] },
+      die: { colorize: [256, 256, 256] },
       radius: 75,
       period: 100,
       interval: 1,
@@ -109,6 +109,12 @@ window.onload = () => {
     emitter: new ParametricEmitter({
       coordinates: [[25, 90], [65, 130]],
       velocity: [-0.5, 0.5],
+      f: t => {
+        return -2 * t + Math.pow(t, 2);
+      },
+      g: t => {
+        return t;
+      },
       lifetime: [1, 100],
       size: 10,
       tRange: [0, 5],
@@ -141,7 +147,7 @@ window.onload = () => {
   var before = 0;
   var fps = 0;
 
-  let mainloop = function () {
+  let mainloop = function() {
     // integrate the scene
     if (!controller.paused) {
       scene.update();
