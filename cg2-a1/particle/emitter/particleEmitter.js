@@ -1,6 +1,5 @@
 /**
- * Initially created by Martin Puse (C) at Beuth University
- * Extended and built upon by Burak Günaydin (853872)
+ * Created by Burak Günaydin (853872) at Beuth University
  */
 import Dragger from '../../util/dragger.js';
 import Point from '../../util/point.js';
@@ -9,7 +8,7 @@ const _ = undefined;
 
 /**
  * A standard single-point-of-origin particle emitter, with the following available configuration:
- * 
+ *
  * @param coordinates, Placement coordinates of the emitter itself
  * @param velocity, The start-velocity of each particle, can be a value, an object with x & y or an array
  * @param size, Size of each individiual particle, can be a value, an object with x & y or an array
@@ -22,7 +21,6 @@ const _ = undefined;
  */
 class ParticleEmitter {
   constructor(config) {
-
     this.coordinates = [];
     this.draggers = [];
     /* Iterate through the array to find the dual arrays within */
@@ -54,7 +52,7 @@ class ParticleEmitter {
   }
 
   /* Optional render method, that renders the form of the emitter */
-  render = (context, debug) => { };
+  render = (context, debug) => {};
 
   /**
    * Updates the coordinates of the particle emitter dependent on the position of its dragger

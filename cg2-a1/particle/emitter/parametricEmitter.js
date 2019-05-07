@@ -1,5 +1,5 @@
 /**
- * Created by Martin Puse (C) at Beuth University
+ * Created by Burak Günaydin (853872) at Beuth University
  */
 import ParticleEmitter from './particleEmitter.js';
 

@@ -1,6 +1,5 @@
 /**
- * Initially created by Martin Puse (C) at Beuth University
- * Extended and built upon by Burak Günaydin (853872)
+ * Created by Burak Günaydin (853872) at Beuth University
  */
 import ParticleEmitter from './particleEmitter.js';
 
@@ -11,9 +10,9 @@ const _ = undefined;
 
 /**
  * A circular particle emitter, that emits particle dependent on the given angles
- * 
- * @param config.radius, The radius of the 
- * @param config.period, 
+ *
+ * @param config.radius, The radius of the
+ * @param config.period,
  */
 class CircularEmitter extends ParticleEmitter {
   constructor(config) {
@@ -27,7 +26,9 @@ class CircularEmitter extends ParticleEmitter {
     /* Places a dragger in the centre of the circle and on the right side of the radius */
     this.draggers = [
       new Dragger(this.coordinates[0]),
-      new Dragger(new Point(this.coordinates[0].x + this.radius, this.coordinates[0].y))
+      new Dragger(
+        new Point(this.coordinates[0].x + this.radius, this.coordinates[0].y)
+      )
     ];
   }
 
@@ -35,7 +36,9 @@ class CircularEmitter extends ParticleEmitter {
     this.coordinates[0] = this.draggers[0].position;
 
     /* Calculating the distance between the two draggers of the circle */
-    this.radius = this.draggers[0].position.getDistance(this.draggers[1].position);
+    this.radius = this.draggers[0].position.getDistance(
+      this.draggers[1].position
+    );
 
     this.counter++;
     if (this.counter % this.interval === 0) this.emit(partSys);
@@ -45,7 +48,14 @@ class CircularEmitter extends ParticleEmitter {
     if (!debug) return;
 
     context.beginPath();
-    context.arc(this.coordinates[0].x, this.coordinates[0].y, this.radius, 0, 2 * Math.PI, false);
+    context.arc(
+      this.coordinates[0].x,
+      this.coordinates[0].y,
+      this.radius,
+      0,
+      2 * Math.PI,
+      false
+    );
     context.lineWidth = 1;
     context.strokeStyle = '#FFF';
     context.stroke();
