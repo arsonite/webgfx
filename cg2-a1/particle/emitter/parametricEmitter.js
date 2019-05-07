@@ -27,7 +27,6 @@ class ParametricEmitter extends ParticleEmitter {
    * Parametric functions
    */
   u(t) {
-    console.log(this.f);
     return this.coordinates[0].x + this.coordinates[0].x * this.f(t);
   }
   v(t) {

@@ -28,7 +28,10 @@ class ParticleSystem {
     if (config.gravitation === 'random') {
       this.gravitation = util.rand(0.1, 1);
     } else if (Array.isArray(config.gravitation)) {
-      this.gravitation = new Point(config.gravitation[0], config.gravitation[1]);
+      this.gravitation = new Point(
+        config.gravitation[0],
+        config.gravitation[1]
+      );
     } else if (config.gravitation instanceof Point) {
       /* Copies the object instead of making a reference to ensure independence of particles */
       this.gravitation = Object.assign({}, config.gravitation);
@@ -44,7 +47,7 @@ class ParticleSystem {
   /**
    * Creates n-amount of particles per tick and pushed them into the
    * global array
-   * 
+   *
    * @param n, Amount of particles simultaneously created
    */
   create = (n = 1) => {
@@ -79,7 +82,9 @@ class ParticleSystem {
 
     /* Observes particle lifetime and removes them from array when reaching 0 */
     this.particles.forEach((particle, i) => {
-      particle.lifetime > 0 ? particle.update(this.gravitation) : this.particles.splice(i, 1);
+      particle.lifetime > 0
+        ? particle.update(this.gravitation)
+        : this.particles.splice(i, 1);
     });
   };
 
