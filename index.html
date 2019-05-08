@@ -3,49 +3,57 @@
 <head>
 	<meta charset="utf-8" />
 	<title>WebGL</title>
+	<script type="module" src="./index/index.js" defer></script>
 
-	<link rel="stylesheet" type="text/css" media="screen" href="./style/index.css" />
-</head>
+	<link rel="stylesheet" type="text/css" media="screen" href="./index/style/index.css" />
 
 <body>
 	<div id="content">
-		<img id="webgl" src="./res/webgl_inverted.svg">
+		<span id="title">
+			<div>
+				<p>Powered by</p>
+				<img id="webgl" src="./res/webgl_inverted.svg">
+				<p>and</p>
+				<img id="webgl" src="./res/canvas.svg">
+			</div>
+		</span>
 
 		<nav>
-			<div class="frame">
-				<span>Beuth Projects (3D Web Graphics)</span>
-				<div id="3dwebgfx" class="links">
-					<div class="link">
-						<span>WebGL-Test</span>
-						<a href="./beuth/a0/a0-test/index.html">A0</a>
-					</div>
-
-					<div class="link">
-						<span>CANVAS-ParticleSystem</span>
-						<a href="./beuth/a1/index.html">A1</a>
-					</div>
-
-					<div class="link">
-						<a href="./beuth/a2/index.html">A2</a>
-					</div>
-
-					<div class="link">
-						<a href="./beuth/a3/index.html">A3</a>
-					</div>
+			<fieldset>
+				<legend>3D Web-Graphics (Beuth)</legend>
+				<div>
+					<a href="./beuth/a0/a0-test/index.html">A0</a>
+					<span>WebGL-Test</span>
 				</div>
-			</div>
-
-			<div class="frame">
-				<span>Own Projects</span>
-				<div id="personal" class="links">
-					<div class="link">
-						<a href="./partilicious/index.html">Partilicious</a>
-					</div>
-					<div class="link">
-						<a href="./startlight/index.html">Starlight</a>
-					</div>
+				<div>
+					<a href="./beuth/a1/index.html">A1</a>
+					<span>HTML5-Canvas ParticleSystem</span>
 				</div>
-			</div>
+				<div>
+					<a href="./beuth/a2/index.html">A2</a>
+					<span>TBA</span>
+				</div>
+				<div>
+					<a href="./beuth/a3/index.html">A3</a>
+					<span>TBA</span>
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>Own Projects</legend>
+				<div>
+					<a href="./partilicious/index.html">Partilicious</a>
+					<span>Particle-Generator with UI</span>
+				</div>
+				<div>
+					<a href="./starlight/index.html">Starlight</a>
+					<span>Starsystem simulator and generator</span>
+				</div>
+				<div>
+					<a href="./physica/index.html">PhysiCa</a>
+					<span>A physics engine within HTML5 (Canvas/WebGL)</span>
+				</div>
+			</fieldset>
 		</nav>
 	</div>
 
