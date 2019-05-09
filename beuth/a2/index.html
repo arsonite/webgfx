@@ -1,32 +1,30 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <!--
-            (C)opyright Martin Puse, mpuse@beuth-hochschule.de
-        -->
-        <title>3WG A2: WebGL</title>
 
-        <script src="../lib/webgl-debug.js"></script>
-        <script type="module" src="app.js"></script>
-         
-        <link rel="stylesheet" type="text/css" media="screen" href="style.css">
-    </head>
+<head>
+    <meta charset="utf-8">
+    <!--
+        (C)opyright Martin Puse, mpuse@beuth-hochschule.de
+    -->
+    <title>WebGL | A2</title>
 
-    <body>
-        
-        <!-- centered region with drawing canvas and parameter area -->
-        <div id="container">
+    <link rel="stylesheet" type="text/css" media="screen" href="./style/style.css">
 
-            <canvas id = "canvas3d" width="800" height="600" backgroundColor = 'rgba(158, 167, 184, 0.2)'>
-                <!-- NOTE: the "position:relative" is required due to the current
+    <script type="module" src="app.js"></script>
+    <!--<script src="../lib/webgl-debug.js"></script>-->
+</head>
+
+<body>
+    <!-- centered region with drawing canvas and parameter area -->
+    <div id="container">
+        <canvas id="canvas3d" width="800" height="600" backgroundColor='rgba(158, 167, 184, 0.2)'>
+            <!-- NOTE: the "position:relative" is required due to the current
                      implementation of mouse coordinate processing in module "util".-->
-                If you see this text, your browser probably does not
-                support WebGL.
-            </canvas>
+            If you see this text, your browser probably does not
+            support WebGL.
+        </canvas>
+        <div id="info">3D Web Graphics</div>
+    </div>
+</body>
 
-            <div id="info">3D Web Graphics</div>
-      
-        </div>
-    </body>
 </html>
