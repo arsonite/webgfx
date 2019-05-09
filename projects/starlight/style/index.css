@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  font-family: Arial, Helvetica;
+  font-size: 20px;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+@font-face {
+  font-family: LetterGothic;
+  src: url(../res/LetterGothic.otf);
+}
+@font-face {
+  font-family: Minecraft;
+  src: url(../res/Minecraft.ttf);
+}
+body {
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  background-color: #050505;
+}
+body #fpsFrame {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  font-family: Minecraft;
+  font-size: 20px;
+  z-index: 2;
+}
+body #fpsFrame #fps {
+  padding-left: 10px;
+  color: #00FF66;
+  font-family: inherit;
+  font-size: inherit;
+}
+body canvas {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}

@@ -27,14 +27,14 @@ class Scene {
   };
 
   update = () => {
-    this.actors.forEach(actor => {
+    for (let actor of this.actors) {
       actor.update();
-    });
+    }
   };
 
-  render = (context, debug) => {
+  render = (context) => {
     this.actors.forEach(actor => {
-      actor.render(context, debug);
+      actor.render(context);
     });
   };
 }

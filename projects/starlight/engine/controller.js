@@ -8,8 +8,6 @@ class Controller {
       dxy: []
     };
 
-    this.debug = true;
-
     this.listen();
   }
 
@@ -45,18 +43,6 @@ class Controller {
   contextPos = event => {
     let rect = this.context.canvas.getBoundingClientRect();
     return [event.clientX - rect.left, event.clientY - rect.top];
-  };
-
-  render = () => {
-    let context = this.context;
-    context.font = '12pt Arial';
-    context.fillStyle = 'white';
-    context.fillText(
-      `mouse: pos(${this.mouse.pos[0]}, ${this.mouse.pos[1]})
-          dxy(${this.mouse.dxy[0]}, ${this.mouse.dxy[1]})`,
-      10,
-      40
-    );
   };
 }
 

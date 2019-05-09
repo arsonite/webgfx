@@ -11,12 +11,10 @@ class Renderer {
     context.fillRect(0, 0, canvas.width, canvas.height);
   };
 
-  render = (scene, controller) => {
+  render = (scene) => {
     this.clear();
 
     scene.render(this.context);
-
-    controller.render();
   };
 }
 
