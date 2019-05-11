@@ -6,6 +6,7 @@ import Program from './program.js'
 let _shaderPairs = {
     color: { files: ['color.vert', 'color.frag'], codes: ['', ''] },
     phong_vertex: { files: ['phong_vertex.vert', 'phong_vertex.frag'], codes: ['', ''] },
+    manip: { files: ['manip.vert', 'manip.frag'], codes: ['', ''] }
 }
 
 const NUM_SHADERPAIRS = Object.keys(_shaderPairs).length

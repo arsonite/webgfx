@@ -3,7 +3,6 @@ import {
 	IndexBuffer
 } from './buffer.js'
 
-
 /*
  * A mesh contains the geometric data through vertices.
  * Vertices for this mesh class can have positions, colors, normals and texture coordinates.
@@ -56,6 +55,7 @@ class Mesh {
 				if (this.colorsBuffer) program.setAttribute('vertexColor', this.colorsBuffer);
 			case 'manip':
 				if (this.coordsBuffer) program.setAttribute('vertexPosition', this.coordsBuffer)
+				if (this.colorsBuffer) program.setAttribute('vertexColor', this.colorsBuffer);
 				break
 			case 'phong_vertex':
 			case 'phong_pixel':

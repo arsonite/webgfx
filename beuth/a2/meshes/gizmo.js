@@ -1,5 +1,4 @@
 import Mesh from '../engine/mesh.js';
-import util from '../util.js';
 
 // the origin and the three unit axes
 let _coords = [
@@ -9,15 +8,19 @@ let _coords = [
     0, 0, 1
 ];
 
+// three lines from the origin
+let _indices = [
+    0, 1,
+    0, 2,
+    0, 3
+];
+
 let _colors = [
     1, 1, 1, 1,
     1, 0, 0, 1,
     0, 1, 0, 1,
     0, 0, 1, 1
 ];
-
-// three lines from the origin
-//let _indices = []
 
 let _mesh = null;
 
@@ -29,8 +32,8 @@ class Gizmo {
             _mesh = new Mesh(gl, {
                 coords: _coords,
                 colors: _colors,
-                //indices: _indices,
-                primitiveType: gl.POINTS
+                indices: _indices,
+                primitiveType: gl.LINES
             });
             this.mesh = _mesh;
         }

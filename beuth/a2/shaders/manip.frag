@@ -1,3 +1,5 @@
+uniform float simtime;
+
 varying vec4 color;
 
 void main() {

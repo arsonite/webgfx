@@ -8,6 +8,7 @@ import Program from './engine/program.js'
 
 import Gizmo from './meshes/gizmo.js'
 import Sphere from './meshes/sphere.js'
+import Cube from './meshes/cube.js'
 import Model from './engine/model.js'
 
 import { mat3, mat4 } from '../lib/gl-matrix-1.3.7.js'
@@ -49,14 +50,22 @@ class Scene {
         this.normalMatrix2 = mat3.create()
 
         // load some meshes for use in models
-        this.gizmo = new Gizmo(gl)
-        this.sphere = new Sphere(gl, { numLongitudes: 20, numLatitudes: 20 })
+        this.gizmo = new Gizmo(gl);
+        this.cube = new Cube(gl, {
+            //size: 2
+        });
+        this.sphere = new Sphere(gl, { numLongitudes: 20, numLatitudes: 20 });
 
         // add models to the scene
         this.models = {
-            'gizmo': new Model(gl, {
+            /*'gizmo': new Model(gl, {
                 mesh: this.gizmo.mesh,
                 program: shaders.getProgram('color')
+            }),*/
+
+            'cube': new Model(gl, {
+                mesh: this.cube.mesh,
+                program: shaders.getProgram('manip')
             })
         }
     }
@@ -102,9 +111,8 @@ class Scene {
 
         switch (program.name) {
             case 'manip':
-                // TODO
-                break
-
+                program.setUniform('simtime', this.sitime);
+                break;
             case 'phong_vertex':
                 program.setUniform('normalMatrix', this.normalMatrix)
                 // TODO
