@@ -4,22 +4,22 @@ import Program from './program.js'
 
 // define all to be loaded glsl files
 let _shaderPairs = {
-    color : { files: ['color.vert', 'color.frag'], codes: ['', ''] },
-    phong_vertex : { files: ['phong_vertex.vert', 'phong_vertex.frag'], codes: ['', ''] },
+    color: { files: ['color.vert', 'color.frag'], codes: ['', ''] },
+    phong_vertex: { files: ['phong_vertex.vert', 'phong_vertex.frag'], codes: ['', ''] },
 }
 
 const NUM_SHADERPAIRS = Object.keys(_shaderPairs).length
 let _numLoaded = 0
-let _onLoadedCallback = () => {}
+let _onLoadedCallback = () => { }
 
 let _gl
 let _programs = {}
-let _createPrograms = function() {
+let _createPrograms = function () {
     // create all required GPU programs from vertex and fragment shaders
     for (let name in _shaderPairs) {
         _programs[name] = new Program(_gl, {
-            name  : name,
-            codes : _shaderPairs[name].codes
+            name: name,
+            codes: _shaderPairs[name].codes
         })
     }
 }
@@ -37,12 +37,12 @@ let _precisionHeader = `
     #endif
 `
 
-let _loadShader = function(path, response) {
+let _loadShader = function (path, response) {
     if (typeof response !== 'function')
         util.fatal('need response callback')
 
     let xhr = new XMLHttpRequest()
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 response(xhr.responseText)
@@ -60,10 +60,8 @@ let _loadShader = function(path, response) {
     xhr.send()
 }
 
-
 let shaderLoader = {
-
-    load: function(gl, onLoaded) {
+    load: function (gl, onLoaded) {
         _gl = gl
         _onLoadedCallback = onLoaded
 
