@@ -59,9 +59,15 @@ class Scene {
                 program: shaders.getProgram('color')
             }),*/
 
-			cube: new Model(gl, {
+			/*cube: new Model(gl, {
 				mesh: this.cube.mesh,
 				program: shaders.getProgram('manip')
+			})*/
+
+			sphere: new Model(gl, {
+				mesh: this.sphere.mesh,
+				material: this.materials['white'],
+				program: shaders.getProgram('phong_vertex')
 			})
 		};
 	}

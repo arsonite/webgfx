@@ -1,7 +1,4 @@
-import {
-	AttributeBuffer,
-	IndexBuffer
-} from './buffer.js'
+import { AttributeBuffer, IndexBuffer } from './buffer.js';
 
 /*
  * A mesh contains the geometric data through vertices.
@@ -10,77 +7,87 @@ import {
  */
 class Mesh {
 	constructor(gl, config) {
-		this.gl = gl
-		this.primitiveType = config.primitiveType >= 0 ? config.primitiveType : gl.TRIANGLES
+		this.gl = gl;
+		this.primitiveType =
+			config.primitiveType >= 0 ? config.primitiveType : gl.TRIANGLES;
 
 		if (config.coords)
 			this.coordsBuffer = new AttributeBuffer(gl, {
-				numComponents: 3,	// xyz
+				numComponents: 3, // xyz
 				dataType: gl.FLOAT,
 				data: config.coords
-			})
+			});
 
 		if (config.colors)
 			this.colorsBuffer = new AttributeBuffer(gl, {
-				numComponents: 4,	// rgba
+				numComponents: 4, // rgba
 				dataType: gl.FLOAT,
 				data: config.colors
-			})
+			});
 
 		if (config.texcoords)
 			this.texcoordsBuffer = new AttributeBuffer(gl, {
-				numComponents: 2,	// uv
+				numComponents: 2, // uv
 				dataType: gl.FLOAT,
 				data: config.texcoords
-			})
+			});
 
 		if (config.normals)
 			this.normalsBuffer = new AttributeBuffer(gl, {
-				numComponents: 3,	//xyz
+				numComponents: 3, //xyz
 				dataType: gl.FLOAT,
 				data: config.normals
-			})
+			});
 
 		if (config.indices)
 			this.indicesBuffer = new IndexBuffer(gl, {
 				// numComponents is 1 by definition
 				// dataType is integer by definition
 				data: config.indices
-			})
+			});
 	}
 
 	bind(program) {
 		switch (program.name) {
 			case 'color':
-				if (this.colorsBuffer) program.setAttribute('vertexColor', this.colorsBuffer);
+				if (this.colorsBuffer)
+					program.setAttribute('vertexColor', this.colorsBuffer);
 			case 'manip':
-				if (this.coordsBuffer) program.setAttribute('vertexPosition', this.coordsBuffer)
-				if (this.colorsBuffer) program.setAttribute('vertexColor', this.colorsBuffer);
-				break
+				if (this.coordsBuffer)
+					program.setAttribute('vertexPosition', this.coordsBuffer);
+				if (this.colorsBuffer)
+					program.setAttribute('vertexColor', this.colorsBuffer);
+				break;
 			case 'phong_vertex':
 			case 'phong_pixel':
-				if (this.coordsBuffer) program.setAttribute('vertexPosition', this.coordsBuffer)
-				if (this.normalsBuffer) program.setAttribute('vertexNormal', this.normalsBuffer)
-				break
+				if (this.coordsBuffer)
+					program.setAttribute('vertexPosition', this.coordsBuffer);
+				if (this.normalsBuffer)
+					program.setAttribute('vertexNormal', this.normalsBuffer);
+				break;
 		}
 
-		this.indicesBuffer ?
-			this.indicesBuffer.bind() :
-			this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, null)
+		this.indicesBuffer
+			? this.indicesBuffer.bind()
+			: this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, null);
 	}
 
 	unbind(program) {
-		program.unsetAttributes()
+		program.unsetAttributes();
 	}
 
 	render() {
-		let gl = this.gl
+		let gl = this.gl;
 
-		this.indicesBuffer ?
-			gl.drawElements(this.primitiveType, this.indicesBuffer.numElements(), gl.UNSIGNED_SHORT, 0) :
-			gl.drawArrays(this.primitiveType, 0, this.coordsBuffer.numElements())
+		this.indicesBuffer
+			? gl.drawElements(
+					this.primitiveType,
+					this.indicesBuffer.numElements(),
+					gl.UNSIGNED_SHORT,
+					0
+			  )
+			: gl.drawArrays(this.primitiveType, 0, this.coordsBuffer.numElements());
 	}
 }
 
-
-export default Mesh
+export default Mesh;

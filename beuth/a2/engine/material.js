@@ -1,7 +1,6 @@
-import Texture from './texture.js'
+import Texture from './texture.js';
 
-let _defaultTexture = null
-
+let _defaultTexture = null;
 
 /*
  * Multi purpose material. Combines properties of different types of materials
@@ -10,30 +9,28 @@ let _defaultTexture = null
 class Material {
 	constructor(gl, config) {
 		if (!_defaultTexture)
-			_defaultTexture = new Texture(gl, { name: 'default' })
+			_defaultTexture = new Texture(gl, { name: 'default' });
 
-		this.gl = gl
-		this.config = config
+		this.gl = gl;
+		this.config = config;
 
-		// simple		
-		config.ambient        = config.ambient        || [0,0,0]
-		config.diffuse        = config.diffuse        || [1,1,1]
-		config.specular       = config.specular       || [1,1,1]
-		config.shininess      = config.shininess      || 32
+		// simple
+		config.ambient = config.ambient || [0, 0, 0];
+		config.diffuse = config.diffuse || [1, 1, 1];
+		config.specular = config.specular || [1, 1, 1];
+		config.shininess = config.shininess || 32;
 
 		// textured
-		config.diffuseTexture  = config.diffuseTexture  || _defaultTexture
-
+		config.diffuseTexture = config.diffuseTexture || _defaultTexture;
 	}
 
 	bind(program) {
-		let config = this.config
-		let gl = this.gl
-		
-		switch (program.name) {
+		let config = this.config;
+		let gl = this.gl;
 
+		switch (program.name) {
 			case 'color':
-				break
+				break;
 
 			case 'phong_vertex':
 			case 'phong_pixel':
@@ -41,10 +38,9 @@ class Material {
 				// program.setUniform('material.diffuse',   config.diffuse)
 				// program.setUniform('material.specular',  config.specular)
 				// program.setUniform('material.shininess', config.shininess)
-				break
+				break;
 		}
 	}
 }
 
-
-export default Material
+export default Material;
