@@ -8,6 +8,10 @@ let _shaderPairs = {
 		files: ['phong_vertex.vert', 'phong_vertex.frag'],
 		codes: ['', '']
 	},
+	phong_pixel: {
+		files: ['phong_pixel.vert', 'phong_pixel.frag'],
+		codes: ['', '']
+	},
 	manip: { files: ['manip.vert', 'manip.frag'], codes: ['', ''] }
 };
 

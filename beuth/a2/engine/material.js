@@ -30,14 +30,22 @@ class Material {
 
 		switch (program.name) {
 			case 'color':
+				program.setUniform('material.ambient', config.ambient);
+				program.setUniform('material.diffuse', config.diffuse);
+				program.setUniform('material.specular', config.specular);
+				program.setUniform('material.shininess', config.shininess);
 				break;
-
 			case 'phong_vertex':
+				program.setUniform('material.ambient', config.ambient);
+				program.setUniform('material.diffuse', config.diffuse);
+				program.setUniform('material.specular', config.specular);
+				program.setUniform('material.shininess', config.shininess);
+				break;
 			case 'phong_pixel':
-				// program.setUniform('material.ambient',   config.ambient)
-				// program.setUniform('material.diffuse',   config.diffuse)
-				// program.setUniform('material.specular',  config.specular)
-				// program.setUniform('material.shininess', config.shininess)
+				program.setUniform('material.ambient', config.ambient);
+				program.setUniform('material.diffuse', config.diffuse);
+				program.setUniform('material.specular', config.specular);
+				program.setUniform('material.shininess', config.shininess);
 				break;
 		}
 	}

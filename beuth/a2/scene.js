@@ -54,10 +54,10 @@ class Scene {
 
 		// add models to the scene
 		this.models = {
-			/*'gizmo': new Model(gl, {
-                mesh: this.gizmo.mesh,
-                program: shaders.getProgram('color')
-            }),*/
+			/*gizmo: new Model(gl, {
+				mesh: this.gizmo.mesh,
+				program: shaders.getProgram('color')
+			}),*/
 
 			/*cube: new Model(gl, {
 				mesh: this.cube.mesh,
@@ -70,6 +70,7 @@ class Scene {
 				program: shaders.getProgram('phong_vertex')
 			})
 		};
+		console.log(this.models);
 	}
 
 	update(deltatime) {
@@ -108,16 +109,24 @@ class Scene {
 		program.setUniform('modelViewMatrix', this.modelViewMatrix);
 
 		// create normal matrix for lighting calculations
-		mat4.toInverseMat3(this.modelViewMatrix, this.normalMatrix);
-		mat3.transpose(this.normalMatrix);
+		this.normalMatrix = mat4.toInverseMat3(
+			this.modelViewMatrix,
+			this.normalMatrix
+		);
+		this.normalMatrix = mat3.transpose(this.normalMatrix);
+		//mat4.toInverseMat3(this.modelViewMatrix, this.normalMatrix);
+		//mat3.transpose(this.normalMatrix);
 
 		switch (program.name) {
 			case 'manip':
 				program.setUniform('simtime', this.simtime);
 				break;
 			case 'phong_vertex':
+				program.setUniform('light', this.lights[0]);
+				program.setUniform('projectionMatrix', this.projectionMatrix);
+				program.setUniform('modelViewMatrix', this.modelViewMatrix);
 				program.setUniform('normalMatrix', this.normalMatrix);
-				// TODO
+				program.setUniform('viewMatrix', this.viewMatrix);
 				break;
 		}
 	}
