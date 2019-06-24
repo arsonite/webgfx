@@ -28,24 +28,31 @@ class Material {
 		let config = this.config;
 		let gl = this.gl;
 
+		program.setUniform('material.ambient', config.ambient);
+		program.setUniform('material.diffuse', config.diffuse);
+
 		switch (program.name) {
 			case 'color':
-				program.setUniform('material.ambient', config.ambient);
-				program.setUniform('material.diffuse', config.diffuse);
 				program.setUniform('material.specular', config.specular);
 				program.setUniform('material.shininess', config.shininess);
 				break;
+
 			case 'phong_vertex':
-				program.setUniform('material.ambient', config.ambient);
-				program.setUniform('material.diffuse', config.diffuse);
 				program.setUniform('material.specular', config.specular);
 				program.setUniform('material.shininess', config.shininess);
 				break;
+
 			case 'phong_pixel':
-				program.setUniform('material.ambient', config.ambient);
-				program.setUniform('material.diffuse', config.diffuse);
 				program.setUniform('material.specular', config.specular);
 				program.setUniform('material.shininess', config.shininess);
+				break;
+
+			case 'earth':
+				program.setUniform('material.specular', config.specular);
+				program.setUniform('material.shininess', config.shininess);
+				break;
+
+			case 'moon':
 				break;
 		}
 	}

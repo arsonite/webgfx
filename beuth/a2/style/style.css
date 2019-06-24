@@ -1,15 +1,1 @@
-body {
-  color: #cccccc;
-  font-family: Monospace;
-  font-size: 13px;
-  background-color: #ffffff;
-  margin: 0px;
-  overflow: hidden;
-}
-body #container {
-  position: relative;
-}
-body #container #canvas3d,
-body #container #info {
-  position: absolute;
-}
+body{color:#cccccc;font-family:Monospace;font-size:13px;background-color:#000;margin:0;overflow:hidden}body #container{position:relative}body #container #canvas3d,body #container #info{position:absolute}

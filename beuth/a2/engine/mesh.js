@@ -50,8 +50,11 @@ class Mesh {
 	bind(program) {
 		switch (program.name) {
 			case 'color':
+				if (this.coordsBuffer)
+					program.setAttribute('vertexPosition', this.coordsBuffer);
 				if (this.colorsBuffer)
 					program.setAttribute('vertexColor', this.colorsBuffer);
+				break;
 			case 'manip':
 				if (this.coordsBuffer)
 					program.setAttribute('vertexPosition', this.coordsBuffer);
@@ -63,11 +66,28 @@ class Mesh {
 					program.setAttribute('vertexPosition', this.coordsBuffer);
 				if (this.normalsBuffer)
 					program.setAttribute('vertexNormal', this.normalsBuffer);
+				break;
 			case 'phong_pixel':
 				if (this.coordsBuffer)
 					program.setAttribute('vertexPosition', this.coordsBuffer);
 				if (this.normalsBuffer)
 					program.setAttribute('vertexNormal', this.normalsBuffer);
+				break;
+			case 'earth':
+				if (this.coordsBuffer)
+					program.setAttribute('vertexPosition', this.coordsBuffer);
+				if (this.normalsBuffer)
+					program.setAttribute('vertexNormal', this.normalsBuffer);
+				if (this.texcoordsBuffer)
+					program.setAttribute('vertexTexcoords', this.texcoordsBuffer);
+				break;
+			case 'moon':
+				if (this.coordsBuffer)
+					program.setAttribute('vertexPosition', this.coordsBuffer);
+				if (this.normalsBuffer)
+					program.setAttribute('vertexNormal', this.normalsBuffer);
+				if (this.texcoordsBuffer)
+					program.setAttribute('vertexTexcoords', this.texcoordsBuffer);
 				break;
 		}
 

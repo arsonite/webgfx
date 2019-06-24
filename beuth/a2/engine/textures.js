@@ -5,7 +5,8 @@ let _textureInfos = {
 	earthDay: { path: './textures/earth_day.jpg', texture: null },
 	earthNight: { path: './textures/earth_night.jpg', texture: null },
 	earthWater: { path: './textures/earth_water.jpg', texture: null },
-	earthCloud: { path: './textures/earth_cloud.jpg', texture: null }
+	earthCloud: { path: './textures/earth_cloud.jpg', texture: null },
+	moon: { path: './textures/moon.jpg', texture: null }
 };
 
 const NUM_TEXTURES = Object.keys(_textureInfos).length;

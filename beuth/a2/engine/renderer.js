@@ -58,7 +58,6 @@ class Renderer {
 		let canvas = gl.canvas;
 
 		// clear color and depth buffers
-		gl.clearColor(0.3, 0.3, 0.3, 1.0);
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 		// set up depth test to discard occluded fragments
 		gl.enable(gl.DEPTH_TEST);

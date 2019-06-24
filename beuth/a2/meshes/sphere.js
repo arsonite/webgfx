@@ -5,7 +5,8 @@ let _sphereMeshes = {};
 class Sphere {
 	constructor(gl, config) {
 		// check if we have already created sphere with the dimensions
-		let key = '' + config.numLatitudes + '' + config.numLongitudes;
+		let key =
+			'' + config.numLatitudes + '' + config.numLongitudes + '' + config.radius;
 		if (!_sphereMeshes[key]) {
 			console.log(
 				`creating a new unit sphere mesh with resolution (${
@@ -34,9 +35,9 @@ class Sphere {
 					let x = cosPhi * sinTheta;
 					let y = cosTheta;
 					let z = sinPhi * sinTheta;
-					coords.push(x);
-					coords.push(y);
-					coords.push(z);
+					coords.push(x * config.radius);
+					coords.push(y * config.radius);
+					coords.push(z * config.radius);
 					normals.push(x);
 					normals.push(y);
 					normals.push(z);
