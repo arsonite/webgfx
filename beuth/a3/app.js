@@ -3,8 +3,10 @@
  * (C)opyright Martin Puse, mpuse@beuth-hochschule.de
  * Modified by Burak Günaydin (853872)
  */
+import StellarBody from './StellarBody.mjs';
+import Camera from './Camera.mjs';
+import Vector from './Vector.mjs';
 
-const _ = undefined;
 const texturePath = './textures/';
 
 /* Global configuration */
@@ -38,77 +40,43 @@ scene.add(cube);
 */
 
 /* A3.1.2 */
-class StellarBody {
-	constructor(
-		name = 'test',
-		extension = 'map',
-		filetype = 'jpg',
-		position = { x: 0, y: 0, z: 0 },
-		type = 'Planet'
-	) {
-		this.model = new THREE.Object3D();
-		this.texture = new THREE.TextureLoader().load(
-			`${texturePath}${name}_${extension}.${filetype}`
-		);
-		this.position;
-	}
-}
-
-/* Light */
-let light = new THREE.PointLight(0xffff00, 1);
-light.castShadow = true;
-
 /* Skybox */
-let textureSky = new THREE.TextureLoader().load(`${texturePath}skybox.jpg`);
-let skyGeometry = new THREE.SphereBufferGeometry(300, 32, 32);
-let skyMaterial = new THREE.MeshBasicMaterial({ map: textureSky });
-skyMaterial.side = THREE.BackSide;
-let sky = new THREE.Mesh(skyGeometry, skyMaterial);
-scene.add(sky);
+let sky = {
+	texture: new THREE.TextureLoader().load(`${texturePath}skybox.jpg`),
+	geometry: new THREE.SphereBufferGeometry(100, 100, 100)
+};
+sky.material = new THREE.MeshBasicMaterial({ map: sky.texture });
+sky.material.side = THREE.BackSide;
+scene.add(new THREE.Mesh(sky.geometry, sky.material));
 
-const stellarBodies = [new StellarBody('earth')];
+/* Solarsystem-node-tree
+
+ * Sun  >   Mercury
+ *      >   Venus
+ *      >   Earth   > Moon (Luna)
+ *      >   Mars
+ *      >   Jupiter
+ *      >   Saturn
+ *      >   Uranus
+ *      >   Neptune
+ *      >   Pluto
+ */
+let solarsystem = [];
+
+let sun = new StellarBody({ name: 'sun', size: 10, type: 'Star' });
+solarsystem.push(sun);
+console.log(sun);
+
+solarsystem.forEach(stellarBody => {
+	scene.add(stellarBody.mesh);
+});
+scene.add(solarsystem);
 
 /* Cameras */
-class Camera {
-	constructor(config) {
-		let exists = (element, defaultValue) =>
-			element !== _ ? element : defaultValue;
-
-		this.fov = exists(config.fov, 90);
-		this.ratio = exists(config.ratio, window.innerWidth / window.innerHeight);
-		this.near = exists(config.near, 0.1);
-		this.far = exists(config.far, 1000);
-
-		this.ortho = exists(config.ortho, false);
-
-		this.position = exists(config.position, { x: 0, y: 5, z: 5 });
-		this.rotation = exists(config.rotation, 0);
-
-		if (this.ortho) {
-			this.inner = new THREE.OrthographicCamera(
-				this.fov,
-				this.ratio,
-				this.near,
-				this.far
-			);
-		} else {
-			this.inner = new THREE.PerspectiveCamera(
-				this.fov,
-				this.ratio,
-				this.near,
-				this.far
-			);
-		}
-		this.inner.position.x = this.position.x;
-		this.inner.position.y = this.position.y;
-		this.inner.position.z = this.position.z;
-	}
-}
-
 let cameras = [
-	new Camera({ rotation: 10 }),
+	new Camera({ position: { x: 0, y: 10, z: 50 }, rotation: 10 }),
 	new Camera({ rotation: 2 }),
-	new Camera({})
+	new Camera({ position: { x: 0, y: 50, z: 0 } })
 ];
 let cameraIndex = 0;
 
@@ -119,14 +87,36 @@ window.onresize = () => {
 };
 
 window.onload = () => {
+	/* Register shortcuts */
+	document.onkeydown = e => {
+		e.preventDefault();
+
+		if (Number.isInteger(Number.parseInt(e.key))) {
+			const index = Number.parseInt(e.key) - 1;
+			if (cameras[index]) {
+				cameraIndex = index;
+			}
+		} else {
+			switch (e.key) {
+				case 'c':
+					if (cameraIndex === cameras.length - 1) {
+						cameraIndex = 0;
+						return;
+					}
+					cameraIndex++;
+					break;
+			}
+		}
+	};
+
 	/* Setup simulation */
 	let delta = 1 / 60;
 	let time = -delta;
 
-	let currentCamera = cameras[cameraIndex];
-
 	let update = function() {
 		time += delta;
+
+		let currentCamera = cameras[cameraIndex];
 
 		if (currentCamera.rotation > 0) {
 			currentCamera.inner.position.x = currentCamera.rotation * Math.sin(time);
@@ -137,6 +127,8 @@ window.onload = () => {
 
 	/* Simulation loop */
 	let render = function() {
+		let currentCamera = cameras[cameraIndex];
+
 		requestAnimationFrame(render);
 
 		update();
