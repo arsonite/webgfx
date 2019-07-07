@@ -81,7 +81,7 @@ let earth = new StellarBody({
 	type: 'Planet'
 });
 let earthOrbit = new THREE.Object3D();
-earthOrbit.position.set(0, 0, 0);
+earthOrbit.position.set(earth.position.x, earth.position.y, earth.position.z);
 earthOrbit.add(earth.mesh);
 solarsystem.add(earthOrbit);
 sun.mesh.add(earthOrbit);
