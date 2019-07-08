@@ -16,8 +16,7 @@ class Camera {
 		this.position = util.exists(config.position, { x: 0, y: 5, z: 5 });
 		this.rotation = util.exists(config.rotation, 0);
 
-		let focus = util.exists(config.focus, { x: 0, y: 0, z: 0 });
-		this.focus = new THREE.Vector3(focus.x, focus.y, focus.z);
+		this.focus = util.exists(config.focus, null);
 
 		this.inner = new THREE.PerspectiveCamera(
 			this.fov,

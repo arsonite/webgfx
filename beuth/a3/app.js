@@ -64,90 +64,58 @@ scene.add(new THREE.Mesh(sky.geometry, sky.material));
  *      >   Neptune
  *      >   Pluto
  */
+let solarsystem = [];
 
-const objects = [];
+let sun = new StellarBody({
+	name: 'sun',
+	size: 10,
+	type: 'Star',
+	rotation: 0.001
+});
+solarsystem.push(sun);
+scene.add(sun.mesh);
 
-//textures
-var textureSun = new THREE.TextureLoader().load('./textures/sun_map.jpg');
-var textureEarth = new THREE.TextureLoader().load('./textures/earth_map.jpg');
-var textureMars = new THREE.TextureLoader().load('./textures/mars_map.jpg');
-var textureMoon = new THREE.TextureLoader().load('./textures/moon_map.jpg');
+let earth = new StellarBody({
+	parent: sun,
+	name: 'earth',
+	position: new Vector(50, 0, 0),
+	size: 3,
+	period: -2000,
+	rotation: 0.02,
+	type: 'Planet'
+});
+solarsystem.push(earth);
+scene.add(earth.mesh);
 
-//light
-var light = new THREE.PointLight(0xfffff0, 2);
-light.castShadow = true;
+let moon = new StellarBody({
+	parent: earth,
+	name: 'moon',
+	position: new Vector(25, 0, 0),
+	size: 1,
+	period: -200,
+	rotation: 0.05,
+	type: 'Planet'
+});
+solarsystem.push(moon);
+scene.add(moon.mesh);
 
-// sunsystem
-var sunsystem = new THREE.Object3D();
-scene.add(sunsystem);
-
-//earthorbit
-var earthOrbit = new THREE.Object3D();
-earthOrbit.position.set(20, 0, 0);
-sunsystem.add(earthOrbit);
-
-//marsOrbit
-var marsOrbit = new THREE.Object3D();
-marsOrbit.position.set(0, 0, 0);
-sunsystem.add(marsOrbit);
-
-//Sun
-var sunGeometry = new THREE.SphereBufferGeometry(6, 32, 32);
-var sunMaterial = new THREE.MeshBasicMaterial({ map: textureSun });
-var sun = new THREE.Mesh(sunGeometry, sunMaterial);
-sun.position.set(0, 0, 0);
-sun.add(light);
-sun.add(earthOrbit);
-sun.add(marsOrbit);
-sunsystem.add(sun);
-
-//earth
-var earthGeometry = new THREE.SphereBufferGeometry(2, 32, 32);
-var earthMaterial = new THREE.MeshPhongMaterial({ map: textureEarth });
-var earth = new THREE.Mesh(earthGeometry, earthMaterial);
-earth.receiveShadow = true;
-earth.castShadow = true;
-earth.position.set(20, 0, 0);
-
-sun.add(earth);
-
-//moon
-var moonGeometry = new THREE.SphereBufferGeometry(0.5, 32, 32);
-var moonMaterial = new THREE.MeshPhongMaterial({ map: textureMoon });
-var moon = new THREE.Mesh(moonGeometry, moonMaterial);
-moon.castShadow = true;
-moon.receiveShadow = true;
-moon.position.x = 3;
-//contolls moon speed
-earthOrbit.add(moon);
-
-//mars
-var marsGeometry = new THREE.SphereBufferGeometry(0.5, 32, 32);
-var marsMaterial = new THREE.MeshPhongMaterial({ map: textureMars });
-var mars = new THREE.Mesh(marsGeometry, marsMaterial);
-mars.receiveShadow = true;
-mars.castShadow = true;
-
-mars.position.x = 10;
-marsOrbit.add(mars);
-
-objects.push(sun);
-objects.push(earth);
-objects.push(mars);
-objects.push(moon);
-
-// lights
-
-//groups
-
-// sceneAdds
-scene.add(sunsystem);
+let venus = new StellarBody({
+	parent: sun,
+	name: 'venus',
+	position: new Vector(20, 0, 0),
+	size: 2,
+	period: -250,
+	rotation: 0.1,
+	type: 'Planet'
+});
+solarsystem.push(venus);
+scene.add(venus.mesh);
 
 /* Cameras */
 let cameras = [
-	new Camera({ position: { x: 0, y: 10, z: 50 }, rotation: 10 }),
+	new Camera({ position: new Vector(0, 15, 50), focus: sun }),
 	new Camera({ focus: earth }),
-	new Camera({ position: { x: 0, y: 50, z: 0 } })
+	new Camera({ position: new Vector(0, 50, 0), rotation: 2, focus: sun })
 ];
 let cameraIndex = 0;
 
@@ -191,17 +159,16 @@ window.onload = () => {
 			currentCamera.inner.position.x = currentCamera.rotation * Math.sin(time);
 			currentCamera.inner.position.z = currentCamera.rotation * Math.cos(time);
 		}
-		currentCamera.inner.lookAt(currentCamera.focus);
+		let focus = currentCamera.focus.position;
+		currentCamera.inner.lookAt(focus.x, focus.y, focus.z);
+
+		solarsystem.forEach(stellarBody => {
+			stellarBody.update();
+		});
 	};
 
 	/* Simulation loop */
 	let render = function() {
-		objects.forEach(obj => {
-			obj.rotation.y += 0.01;
-		});
-		marsOrbit.rotation.y += 0.005;
-		earthOrbit.rotation.y += 0.05;
-
 		let currentCamera = cameras[cameraIndex];
 
 		requestAnimationFrame(render);

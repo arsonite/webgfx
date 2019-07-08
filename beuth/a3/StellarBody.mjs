@@ -14,12 +14,9 @@ class StellarBody {
 		this.filetype = util.exists(config.filetype, 'jpg');
 		this.position = util.exists(config.position, new Vector(0, 0, 0));
 		this.size = util.exists(config.size, 1);
-		this.orbit = util.exists(config.orbit, { period: -1000, rotation: 0.05 });
+		this.period = util.exists(config.period, -1000);
+		this.rotation = util.exists(config.rotation, 0.05);
 		this.type = util.exists(config.type, 'Planet');
-
-		if (this.parent !== null) {
-			this.radius = util.exists(config.radius, null);
-		}
 
 		this.texture = new THREE.TextureLoader().load(
 			`${texturePath}${this.name}_${this.extension}.${this.filetype}`
@@ -36,6 +33,7 @@ class StellarBody {
 		switch (this.type) {
 			case 'Planet':
 				this.mesh.castShadow = true;
+				this.mesh.receiveShadow = true;
 				break;
 			case 'Moon':
 				this.mesh.castShadow = true;
@@ -52,6 +50,7 @@ class StellarBody {
 		}
 
 		this.counter = 0;
+		this.theta = 0;
 	}
 
 	/**
@@ -70,19 +69,14 @@ class StellarBody {
 	 *
 	 */
 	calculateOrbit = () => {
-		let radius;
-		if (this.radius !== null) {
-			radius = this.radius;
-		} else {
-			radius = this.position.getDistance(this.parent.position);
-		}
+		let distance = this.parent.position.getDistance(this.position);
 
-		let angle = ((this.counter * 360) / this.orbit.period / 360) * Math.PI * 2;
+		let angle = ((this.counter * 360) / this.period / 360) * Math.PI * 2;
 
 		this.position = new Vector(
-			this.parent.position.x + Math.cos(angle) * radius,
+			this.parent.position.x + Math.cos(angle) * distance,
 			this.parent.position.y,
-			this.parent.position.z + Math.sin(angle) * radius
+			this.parent.position.z + Math.sin(angle) * distance
 		);
 
 		this.mesh.position.set(this.position.x, this.position.y, this.position.z);
@@ -92,7 +86,7 @@ class StellarBody {
 	 *
 	 */
 	calculateRotation = () => {
-		this.mesh.rotation.y += this.orbit.rotation;
+		this.mesh.rotation.y += this.rotation;
 	};
 
 	/**

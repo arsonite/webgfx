@@ -23,9 +23,7 @@ class Vector {
 	 */
 	getDistance = vector => {
 		return Math.sqrt(
-			Math.pow(vector.x - this.x, 2) +
-				Math.pow(vector.y - this.y, 2) +
-				Math.pow(vector.z - this.z, 2)
+			Math.pow(vector.x - this.x, 2) + Math.pow(vector.z - this.z, 2)
 		);
 	};
 
