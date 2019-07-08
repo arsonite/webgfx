@@ -12,7 +12,7 @@ const texturePath = './textures/';
 /* Global configuration */
 let config = {
 	render: {
-		factor: 2,
+		factor: 1,
 		width: window.innerWidth,
 		height: window.innerHeight
 	}
@@ -64,33 +64,47 @@ scene.add(new THREE.Mesh(sky.geometry, sky.material));
  *      >   Neptune
  *      >   Pluto
  */
-/* Seperating orbital mechanics from meshes */
-let solarsystem = new THREE.Object3D();
-scene.add(solarsystem);
+let solarsystem = [];
 
 /* Sun */
-let sun = new StellarBody({ name: 'sun', size: 10, type: 'Star' });
-scene.add(sun.mesh);
+let sun = new StellarBody({
+	name: 'sun',
+	size: 10,
+	type: 'Star',
+	orbit: { rotation: 0.001 }
+});
+solarsystem.push(sun);
 
 /* Earth */
 let earth = new StellarBody({
 	parent: sun,
 	name: 'earth',
-	position: { x: 20, y: 0, z: 0 },
+	position: new Vector(35, 0, 0),
 	size: 3,
+	orbit: { period: -2500, rotation: 0.02 },
 	type: 'Planet'
 });
-let earthOrbit = new THREE.Object3D();
-earthOrbit.position.set(earth.position.x, earth.position.y, earth.position.z);
-earthOrbit.add(earth.mesh);
-solarsystem.add(earthOrbit);
-sun.mesh.add(earthOrbit);
-sun.mesh.add(earth.mesh);
+solarsystem.push(earth);
+
+/* Moon */
+let moon = new StellarBody({
+	parent: earth,
+	name: 'moon',
+	size: 1,
+	orbit: { period: -500, rotation: 0.05 },
+	radius: 15,
+	type: 'Planet'
+});
+solarsystem.push(moon);
+
+solarsystem.forEach(stellarBody => {
+	scene.add(stellarBody.mesh);
+});
 
 /* Cameras */
 let cameras = [
 	new Camera({ position: { x: 0, y: 10, z: 50 }, rotation: 10 }),
-	new Camera({ focus: earth.mesh.getWorldPosition() }),
+	new Camera({ focus: earth }),
 	new Camera({ position: { x: 0, y: 50, z: 0 } })
 ];
 let cameraIndex = 0;
@@ -104,8 +118,6 @@ window.onresize = () => {
 window.onload = () => {
 	/* Register shortcuts */
 	document.onkeydown = e => {
-		e.preventDefault();
-
 		if (Number.isInteger(Number.parseInt(e.key))) {
 			const index = Number.parseInt(e.key) - 1;
 			if (cameras[index]) {
@@ -139,14 +151,9 @@ window.onload = () => {
 		}
 		currentCamera.inner.lookAt(currentCamera.focus);
 
-		/* Planetary rotations */
-		sun.mesh.rotation.y += 0.001;
-		sun.mesh.children.forEach(child => {
-			child.rotation.y += 0.01;
+		solarsystem.forEach(stellarBody => {
+			stellarBody.update();
 		});
-
-		/* Orbital rotations */
-		earthOrbit.rotation.y += 0.05;
 	};
 
 	/* Simulation loop */
