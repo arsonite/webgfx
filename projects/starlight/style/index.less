@@ -1,62 +1,54 @@
+@import './global.less';
+
 * {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 
-  color: #fff;
-  font-family: Arial, Helvetica;
-  font-size: 20px;
-  border: none;
-  outline: none;
+	color: #fff;
+	font-family: Arial, Helvetica;
+	font-size: 20px;
+	border: none;
+	outline: none;
 
-  box-sizing: border-box;
-}
-
-@font-face {
-  font-family: LetterGothic;
-  src: url(../res/LetterGothic.otf);
-}
-
-@font-face {
-  font-family: Minecraft;
-  src: url(../res/Minecraft.ttf);
+	box-sizing: border-box;
 }
 
 body {
-  overflow: hidden;
+	overflow: hidden;
 
-  height: 100vh;
-  width: 100vw;
-    
-  background-color: #050505;
+	height: 100vh;
+	width: 100vw;
 
-  #fpsFrame {
-    position: fixed;
-    top: 15px;
-    left: 15px;
+	background-color: @anthrazitDark;
 
-    display: flex;
+	#fpsFrame {
+		position: fixed;
+		top: 15px;
+		left: 15px;
 
-    font-family: Minecraft;
-    font-size: 20px;
+		display: flex;
 
-    z-index: 2;
+		font-family: Minecraft;
+		font-size: 20px;
 
-    #fps {
-      padding-left: 10px;
+		z-index: 2;
 
-      color: #00FF66;
-      font-family: inherit;
-      font-size: inherit;
-    }
-  }
+		#fps {
+			padding-left: 10px;
 
-  canvas {
-    position: absolute;
-    top: 0;
+			color: @terminal;
+			font-family: inherit;
+			font-size: inherit;
+		}
+	}
 
-    height: 100%;
-    width: 100%;
+	canvas {
+		position: absolute;
+		top: 0;
 
-    z-index: 1;
-  }
+		height: 100%;
+		width: 100%;
+
+		z-index: 1;
+	}
 }

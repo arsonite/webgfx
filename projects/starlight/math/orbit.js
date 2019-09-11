@@ -1,5 +1,3 @@
-const orbit = {
-
-}
+const orbit = {};
 
 export default orbit;
